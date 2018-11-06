@@ -23,11 +23,16 @@ var colorCode = "38;5;%s;1"
 // shank shankle shoulder.
 func main() {
 	color := os.Args[1]
+
+	fmt.Printf("%s\n", colorize(color, strings.Join(os.Args[2:], " ")))
+}
+
+func colorize(color string, text string) string {
 	code := colors[color]
 
 	if code == "" {
 		code = fmt.Sprintf(colorCode, color)
 	}
 
-	fmt.Printf("\x1b[%sm%s\x1b[0m\n", code, strings.Join(os.Args[2:], " "))
+	return fmt.Sprintf("\x1b[%sm%s\x1b[0m", code, text)
 }
