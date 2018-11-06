@@ -17,6 +17,7 @@ it will be passed to as the __38;5;x__ code.
 
 Examples
 
+A header needs a text after. Otherwise the code below renders it a normal paragraph.
    c green "Hello green world!"
    c 201 WELCOME TO MY PINK UNIVERSE
 
