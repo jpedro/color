@@ -5,7 +5,7 @@
 //
 // EXAMPLES
 //    c green "Hello green world!"
-//    c 210 WELCOPME TO MY PINK UNIVERSE
+//    c 201 WELCOPME TO MY PINK UNIVERSE
 package main
 
 import (
