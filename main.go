@@ -1,11 +1,11 @@
-// Binary for coloring output
+// Binary for colouring output
 //
 // USAGE
 //    c <color> <args>
 //
 // EXAMPLES
 //    c green "Hello green world!"
-//    c 201 THIS IS PINK
+//    c 210 WELCOPME TO MY PINK UNIVERSE
 package main
 
 import (
