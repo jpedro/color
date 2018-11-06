@@ -4,7 +4,7 @@ Binary for colouring output.
 
 Installation
 
-To install **c** just run:
+To install ```c``` just run:
    go get github.com/jpedro/c
 
 
@@ -19,5 +19,6 @@ Examples
 
    c green "Hello green world!"
    c 201 WELCOME TO MY PINK UNIVERSE
+
 */
 package main
