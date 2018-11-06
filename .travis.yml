@@ -1,7 +1,5 @@
 language: go
 
-before_script:
-- composer install
-
-after_success:
-- travis_retry php vendor/bin/coveralls -v
+script:
+  - go test -cover -coverprofile coverage.out
+  - go tool cover -func=coverage.out

@@ -22,6 +22,10 @@ var colorCode = "38;5;%s;1"
 // ham hock burgdoggen fatback pancetta swine picanha turducken landjaeger pastrami
 // shank shankle shoulder.
 func main() {
+	if len(os.Args) < 3 {
+		return
+	}
+
 	color := os.Args[1]
 
 	fmt.Printf("%s\n", colorize(color, strings.Join(os.Args[2:], " ")))
