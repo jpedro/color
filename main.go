@@ -1,9 +1,9 @@
 // Binary for colouring output
 //
-// USAGE
+// # USAGE
 //    c <color> <args>
 //
-// EXAMPLES
+// # EXAMPLES
 //    c green "Hello green world!"
 //    c 210 WELCOPME TO MY PINK UNIVERSE
 package main
