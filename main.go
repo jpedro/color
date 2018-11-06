@@ -1,12 +1,12 @@
 // Binary for colouring output.
 //
-// INSTALLATION
+// Installation
 //    go get github.com/jpedro/c
 //
-// USAGE
+// Usage
 //    c <color> <text...>
 //
-// EXAMPLES
+// Examples
 //    c green "Hello green world!"
 //    c 201 WELCOME TO MY PINK UNIVERSE
 package main
