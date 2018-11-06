@@ -12,7 +12,7 @@ var colors = map[string]string{
 	"yellow": "33;1",
 	"blue":   "38;5;27;1",
 }
-var colorCode string = "38;5;%s;1"
+var colorCode = "38;5;%s;1"
 
 // Bacon ipsum dolor amet corned
 // beef short loin sausage ground round venison pig. Sirloin bresaola ham meatloaf
