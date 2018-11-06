@@ -8,7 +8,7 @@ Binary for colouring output.
 
 ## Installation
 
-	go get github.com/jpedro/c.git
+	go get github.com/jpedro/c
 
 ## Usage
 
