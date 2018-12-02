@@ -15,7 +15,7 @@ Installation
 
 To install ``c`` just run:
 
-   go get github.com/jpedro/c
+   go get github.com/jpedro/color/c
 
 
 Usage
