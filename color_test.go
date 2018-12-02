@@ -7,31 +7,47 @@
 // porchetta, drumstick leberkas t-bone short loin doner filet mignon hamburger corned
 // beef. Venison short loin flank, cupim fatback spare ribs pork loin buffalo turducken
 // tail.package main
-package main
+package color
 
 import (
 	"testing"
 )
 
-func TestColorizeNamed(t *testing.T) {
-	expected := "\x1b[32;1mHello\x1b[0m"
-	returned := colorize("green", "Hello")
+func TestColorizeName(t *testing.T) {
+	expected := "\x1b[32mHello\x1b[0m"
+	returned := Colorize("green", "Hello")
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
 	}
 }
 
 func TestColorizeInteger(t *testing.T) {
-	expected := "\x1b[38;5;27;1mHello\x1b[0m"
-	returned := colorize("27", "Hello")
+	expected := "\x1b[38;5;27mHello\x1b[0m"
+	returned := Colorize("27", "Hello")
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
 	}
 }
 
-func TestColorizeFailk(t *testing.T) {
-	expected := "\x1b[38;5;fail;1mHello\x1b[0m"
-	returned := colorize("fail", "Hello")
+func TestColorizeRgb1(t *testing.T) {
+	expected := "\x1b[38;2;255;0;255mHello\x1b[0m"
+	returned := Colorize("#f0f", "Hello")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+}
+
+func TestColorizeRgb2(t *testing.T) {
+	expected := "\x1b[38;2;255;0;255mHello\x1b[0m"
+	returned := Colorize("#ff00ff", "Hello")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+}
+
+func TestColorizeFail(t *testing.T) {
+	expected := "Hello"
+	returned := Colorize("fail", "Hello")
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
 	}

@@ -34,4 +34,4 @@ But here are the examples:
    c 201 WELCOME TO MY PINK UNIVERSE
 
 */
-package main
+package color
