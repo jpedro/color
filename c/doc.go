@@ -8,30 +8,30 @@
 // shank shankle shoulder.
 
 /*
-Library for colouring output.
+Binary for colouring output.
 
 
-# Installation
+Installation
 
-   go get github.com/jpedro/color
+To install ``c`` just run:
+
+   go get github.com/jpedro/color/c
 
 
-# Usage
+Usage
 
-    package main
+The first argument is the color, the rest is the text. If the color is an integer
+it will be passed to as the __38;5;x__ code.
+   c <color> <text...>
 
-    import (
-      "fmt"
 
-      "github.com/jpedro/color"
-    )
+Examples
 
-    func main() {
-      color := "pink"
-      text := "Hello Universe!"
-      fmt.Printf("%s\n", color.Colorize(color, text))
-    }
+A header needs a text after. Otherwise the code below renders it a normal paragraph.
+But here are the examples:
 
+   c green "Hello green world!"
+   c 201 WELCOME TO MY PINK UNIVERSE
 
 */
-package color
+package main
