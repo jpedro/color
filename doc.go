@@ -13,10 +13,14 @@ Library for colouring output.
 
 Installation
 
+Install with `go get`:
+
    go get github.com/jpedro/color
 
 
 Usage
+
+Sample code:
 
     package main
 
