@@ -18,6 +18,7 @@ var (
   defaultCode = "38;5;%s"
 )
 
+// Returns the wrapped shell outout for a text coloured
 func Colorize(color string, text string) string {
   regexRgb1 := "^#[0-9a-f]{3}$"
   regexRgb2 := "^#[0-9a-f]{6}$"
