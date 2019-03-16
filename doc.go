@@ -11,25 +11,25 @@
 Library for colouring output.
 
 
-# Installation
+Installation
 
    go get github.com/jpedro/color
 
 
-# Usage
+Usage
 
     package main
 
     import (
-      "fmt"
+        "fmt"
 
-      "github.com/jpedro/color"
+        "github.com/jpedro/color"
     )
 
     func main() {
-      color := "pink"
-      text := "Hello Universe!"
-      fmt.Printf("%s\n", color.Colorize(color, text))
+        color := "pink"
+        text := "Hello Universe!"
+        fmt.Printf("%s\n", color.Colorize(color, text))
     }
 
 
