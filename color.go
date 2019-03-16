@@ -53,17 +53,20 @@ func Colorize(color string, text string) string {
   return text
 }
 
+// Returns the closest shell colour string from an (r,g, b) tupple html color
 func FromRgb(color string, text string) string {
     r, g, b := Html2Rgb(color)
     return fmt.Sprintf("\x1b[38;2;%v;%v;%vm%s\x1b[0m", r, g, b, text)
 }
 
+// Returns the (r,g, b) tupple html color from an html hex color string
 func Html2Rgb(color string) (r uint8, g uint8, b uint8) {
     hexFormat := "#%02x%02x%02x"
     fmt.Sscanf(color, hexFormat, &r, &g, &b)
     return
 }
 
+// Returns the shell color code from a named color
 func FromName(color string, text string) string {
   code := colorNames[color]
 
@@ -74,6 +77,7 @@ func FromName(color string, text string) string {
   return fmt.Sprintf("\x1b[%sm%s\x1b[0m", code, text)
 }
 
+// Wraps text with the shell escape code for the selected color
 func FromCode(color string, text string) string {
   code := fmt.Sprintf(defaultCode, color)
   return fmt.Sprintf("\x1b[%sm%s\x1b[0m", code, text)
