@@ -8,7 +8,7 @@
 // shank shankle shoulder.
 
 /*
-Library for colouring output.
+Library for colouring strings.
 
 
 Installation
