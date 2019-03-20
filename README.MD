@@ -14,3 +14,4 @@ Binary for colouring output.
 
 	c green 'Hello world!'
 	c 201 WELCOME TO MY PINK UNIVERSE
+
