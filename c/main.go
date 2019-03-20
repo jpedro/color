@@ -14,8 +14,8 @@ func main() {
     return
   }
 
-  color := os.Args[1]
-  text  := strings.Join(os.Args[2:], " ")
+  name := os.Args[1]
+  text := strings.Join(os.Args[2:], " ")
 
-  fmt.Printf("%s\n", color.Colorize(color, text))
+  fmt.Printf("%s\n", color.Colorize(name, text))
 }
