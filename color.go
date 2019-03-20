@@ -20,8 +20,8 @@ var (
 
 // Returns the wrapped shell outout for a text coloured
 func Colorize(color string, text string) string {
-  regexRgb1 := "^#[0-9a-f]{3}$"
-  regexRgb2 := "^#[0-9a-f]{6}$"
+  regexRgb1 := "^#[0-9A-Za-f]{3}$"
+  regexRgb2 := "^#[0-9A-Za-f]{6}$"
   regexCode := "^[0-9]{2,3}$"
   // regexName := "^[a-z]*$"
 
