@@ -8,12 +8,12 @@ import (
 
 var (
   colorNames = map[string]string{
-    "red"     : "31",
-    "green"   : "32",
-    "yellow"  : "33",
-    "blue"    : "34",
-    "magenta" : "35",
-    "cyan"    : "36",
+    "red"     : "31;1",
+    "green"   : "32;1",
+    "yellow"  : "33;1",
+    "blue"    : "34;1",
+    "magenta" : "35;1",
+    "cyan"    : "36;1",
   }
   defaultCode = "38;5;%s"
 )

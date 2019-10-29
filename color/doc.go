@@ -42,7 +42,7 @@ A header needs a text after. Otherwise the code below renders it a normal paragr
 But here are the examples:
 
     color 208 WELCOME TO MY ORANGE UNIVERSE
-    color green "Hello green world!"
+    color green 'Hello green world!'
 
 */
 package main
