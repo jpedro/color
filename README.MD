@@ -8,9 +8,9 @@ Binary for colouring output.
 
 ## Installation
 
-	go get github.com/jpedro/color/c
+	go get github.com/jpedro/color/color
 
 ## Usage
 
-	c green 'Hello world!'
-	c 201 WELCOME TO MY PINK UNIVERSE
+	color 208 WELCOME TO MY ORANGE UNIVERSE
+	color green "Hello green world!"
