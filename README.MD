@@ -13,4 +13,4 @@ Binary for colouring output.
 ## Usage
 
 	color 208 WELCOME TO MY ORANGE UNIVERSE
-	color green "Hello green world!"
+	color green 'Hello green world!'
