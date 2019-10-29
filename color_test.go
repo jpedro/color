@@ -14,7 +14,7 @@ import (
 )
 
 func TestColorizeName(t *testing.T) {
-	expected := "\x1b[32mHello\x1b[0m"
+	expected := "\x1b[32;1mHello\x1b[0m"
 	returned := Colorize("green", "Hello")
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
