@@ -11,6 +11,7 @@ package color
 
 import (
     "testing"
+    "os"
 )
 
 func TestPaintName(t *testing.T) {
@@ -54,7 +55,16 @@ func TestPaintRgb2(t *testing.T) {
 }
 
 func TestPaintFail(t *testing.T) {
-    expected := "Hello"
+    expected := "\x1b[32;1mHello\x1b[0m"
+    returned := Paint("fail", "Hello")
+    if expected != returned {
+        t.Error("Expected", expected, "got", returned)
+    }
+}
+
+func TestPaintFallback(t *testing.T) {
+    os.Setenv("COLOR_FALLBACK", "yellow")
+    expected := "\x1b[33;1mHello\x1b[0m"
     returned := Paint("fail", "Hello")
     if expected != returned {
         t.Error("Expected", expected, "got", returned)

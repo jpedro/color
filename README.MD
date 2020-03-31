@@ -16,3 +16,9 @@ Binary for colouring shell output.
     color 208 WELCOME TO MY ORANGE UNIVERSE
     color "#0c0" "This is also green"
     color "@SpringGreen5" "SpringGreen5 is apparently one of the 256 named Term colors"
+
+
+## Todos
+
+- [x] Create fallback color
+- [ ] Complete the names of the 256 term colors

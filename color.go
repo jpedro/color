@@ -1,7 +1,7 @@
 package color
 
 import (
-    // "os"
+    "os"
     "fmt"
     "strconv"
     "strings"
@@ -14,6 +14,11 @@ var (
 
 // Returns the shell output for a coloured text
 func Paint(color string, text string) string {
+    fallback := os.Getenv("COLOR_FALLBACK")
+    if fallback == "" {
+        fallback = "green"
+    }
+
     // Check if we have a numeric color
     i, _ := strconv.Atoi(color)
     s := strconv.Itoa(i)
@@ -54,7 +59,7 @@ func Paint(color string, text string) string {
         return FromHtml(htmlColor, text)
     }
 
-    return text
+    return FromName(fallback, text)
 }
 
 // Returns the closest shell colour string from an html hex color (#rrggbb)
