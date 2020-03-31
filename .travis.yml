@@ -1,5 +1,7 @@
 language: go
 
 script:
+  - export
   - go test -cover -coverprofile coverage.out
   - go tool cover -func=coverage.out
+  - [ "$TRAVIS_TAG" != "" ] && GOPROXY=https://proxy.golang.org GO111MODULE=on go get github.com/jpedro/color@$TRAVIS_TAG
