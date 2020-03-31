@@ -10,45 +10,53 @@
 package color
 
 import (
-	"testing"
+    "testing"
 )
 
-func TestColorizeName(t *testing.T) {
-	expected := "\x1b[32;1mHello\x1b[0m"
-	returned := Colorize("green", "Hello")
-	if expected != returned {
-		t.Error("Expected", expected, "got", returned)
-	}
+func TestPaintName(t *testing.T) {
+    expected := "\x1b[32;1mHello\x1b[0m"
+    returned := Paint("green", "Hello")
+    if expected != returned {
+        t.Error("Expected", expected, "got", returned)
+    }
 }
 
-func TestColorizeInteger(t *testing.T) {
-	expected := "\x1b[38;5;27mHello\x1b[0m"
-	returned := Colorize("27", "Hello")
-	if expected != returned {
-		t.Error("Expected", expected, "got", returned)
-	}
+func TestPaintInteger(t *testing.T) {
+    expected := "\x1b[38;5;27mHello\x1b[0m"
+    returned := Paint("27", "Hello")
+    if expected != returned {
+        t.Error("Expected", expected, "got", returned)
+    }
 }
 
-func TestColorizeRgb1(t *testing.T) {
-	expected := "\x1b[38;2;255;0;255mHello\x1b[0m"
-	returned := Colorize("#f0f", "Hello")
-	if expected != returned {
-		t.Error("Expected", expected, "got", returned)
-	}
+func TestPaintTermName(t *testing.T) {
+    expected := "\x1b[38;2;0;95;95mHello\x1b[0m"
+    returned := Paint("@DeepSkyBlue1", "Hello")
+    if expected != returned {
+        t.Error("Expected", expected, "got", returned)
+    }
 }
 
-func TestColorizeRgb2(t *testing.T) {
-	expected := "\x1b[38;2;255;0;255mHello\x1b[0m"
-	returned := Colorize("#ff00ff", "Hello")
-	if expected != returned {
-		t.Error("Expected", expected, "got", returned)
-	}
+func TestPaintRgb1(t *testing.T) {
+    expected := "\x1b[38;2;255;0;255mHello\x1b[0m"
+    returned := Paint("#f0f", "Hello")
+    if expected != returned {
+        t.Error("Expected", expected, "got", returned)
+    }
 }
 
-func TestColorizeFail(t *testing.T) {
-	expected := "Hello"
-	returned := Colorize("fail", "Hello")
-	if expected != returned {
-		t.Error("Expected", expected, "got", returned)
-	}
+func TestPaintRgb2(t *testing.T) {
+    expected := "\x1b[38;2;255;0;255mHello\x1b[0m"
+    returned := Paint("#ff00ff", "Hello")
+    if expected != returned {
+        t.Error("Expected", expected, "got", returned)
+    }
+}
+
+func TestPaintFail(t *testing.T) {
+    expected := "Hello"
+    returned := Paint("fail", "Hello")
+    if expected != returned {
+        t.Error("Expected", expected, "got", returned)
+    }
 }

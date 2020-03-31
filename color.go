@@ -1,85 +1,88 @@
 package color
 
 import (
-  "fmt"
-  "regexp"
-  "strings"
+    // "os"
+    "fmt"
+    "strconv"
+    "strings"
+    "regexp"
 )
 
 var (
-  colorNames = map[string]string{
-    "red"     : "31;1",
-    "green"   : "32;1",
-    "yellow"  : "33;1",
-    "blue"    : "34;1",
-    "magenta" : "35;1",
-    "cyan"    : "36;1",
-  }
-  defaultCode = "38;5;%s"
+    defaultCode = "38;5;%s"
 )
 
-// Returns the wrapped shell outout for a text coloured
-func Colorize(color string, text string) string {
-  regexRgb1 := "^#[0-9A-Za-f]{3}$"
-  regexRgb2 := "^#[0-9A-Za-f]{6}$"
-  regexCode := "^[0-9]{2,3}$"
-  // regexName := "^[a-z]*$"
+// Returns the shell output for a coloured text
+func Paint(color string, text string) string {
+    // Check if we have a numeric color
+    i, _ := strconv.Atoi(color)
+    s := strconv.Itoa(i)
+    if s == color {
+        return FromNumber(color, text)
+    }
 
-  color = strings.ToLower(color)
+    // Check if we have a term named color, like "@CornflowerBlue"
+    if color[0] == '@' {
+        if termColor, ok := termNames[color[1:len(color)]]; ok {
+            return FromHtml(termColor, text)
+        }
+        return text
+    }
 
-  if m, _ := regexp.MatchString(regexRgb1, color); m {
-    color = fmt.Sprintf(
-      "#%s%s%s%s%s%s",
-      string(color[1]),
-      string(color[1]),
-      string(color[2]),
-      string(color[2]),
-      string(color[3]),
-      string(color[3]))
-    return FromRgb(color, text)
-  }
+    // Lower the case for the next rounds
+    color = strings.ToLower(color)
 
-  if m, _ := regexp.MatchString(regexRgb2, color); m {
-    return FromRgb(color, text)
-  }
+    // Check if we have a basic color name
+    if _, ok := basicNames[color]; ok {
+        return FromName(color, text)
+    }
 
-  if m, _ := regexp.MatchString(regexCode, color); m {
-    return FromCode(color, text)
-  }
+    // Finally we do the regex things
+    if m, _ := regexp.MatchString("^#[0-9a-f]{6}$", color); m {
+        return FromHtml(color, text)
+    }
 
-  if _, ok := colorNames[color]; ok {
-      return FromName(color, text)
-  }
+    if m, _ := regexp.MatchString("^#[0-9a-f]{3}$", color); m {
+        htmlColor := fmt.Sprintf(
+            "#%s%s%s%s%s%s",
+            string(color[1]),
+            string(color[1]),
+            string(color[2]),
+            string(color[2]),
+            string(color[3]),
+            string(color[3]))
+        return FromHtml(htmlColor, text)
+    }
 
-  return text
+    return text
 }
 
-// Returns the closest shell colour string from an (r,g, b) tupple html color
-func FromRgb(color string, text string) string {
+// Returns the closest shell colour string from an html hex color (#rrggbb)
+func FromHtml(color string, text string) string {
     r, g, b := Html2Rgb(color)
     return fmt.Sprintf("\x1b[38;2;%v;%v;%vm%s\x1b[0m", r, g, b, text)
 }
 
-// Returns the (r,g, b) tupple html color from an html hex color string
+// Returns the (r,g, b) tupple for an html hex color
 func Html2Rgb(color string) (r uint8, g uint8, b uint8) {
     hexFormat := "#%02x%02x%02x"
     fmt.Sscanf(color, hexFormat, &r, &g, &b)
     return
 }
 
-// Returns the shell color code from a named color
+// Returns the selected basic named color
 func FromName(color string, text string) string {
-  code := colorNames[color]
+    code := basicNames[color]
 
-  // if code == "" {
-  //  code = fmt.Sprintf(defaultCode, color)
-  // }
+    // if code == "" {
+    //  code = fmt.Sprintf(defaultCode, color)
+    // }
 
-  return fmt.Sprintf("\x1b[%sm%s\x1b[0m", code, text)
+    return fmt.Sprintf("\x1b[%sm%s\x1b[0m", code, text)
 }
 
-// Wraps text with the shell escape code for the selected color
-func FromCode(color string, text string) string {
-  code := fmt.Sprintf(defaultCode, color)
-  return fmt.Sprintf("\x1b[%sm%s\x1b[0m", code, text)
+// Returns the selected numeric color
+func FromNumber(color string, text string) string {
+    code := fmt.Sprintf(defaultCode, color)
+    return fmt.Sprintf("\x1b[%sm%s\x1b[0m", code, text)
 }
