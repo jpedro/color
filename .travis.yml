@@ -1,6 +1,6 @@
 language: go
 
-script: >
+script: >-
   export
   go test -cover -coverprofile coverage.out
   go tool cover -func=coverage.out
