@@ -9,13 +9,26 @@ import (
 )
 
 func main() {
-    if len(os.Args) < 3 {
-        fmt.Println("Usage: $0 <color> <text>")
+    var name string
+    var text string
+
+    if len(os.Args) < 2 {
+        fmt.Println("Usage: $0 [color] <text>")
         return
     }
 
-    name := os.Args[1]
-    text := strings.Join(os.Args[2:], " ")
+    if len(os.Args) == 2 {
+        fallback := os.Getenv("COLOR_FALLBACK")
+        if fallback == "" {
+            fallback = "green"
+        }
+        name = fallback
+        text = strings.Join(os.Args[1:], " ")
+
+    } else {
+        name = os.Args[1]
+        text = strings.Join(os.Args[2:], " ")
+    }
 
     fmt.Printf("%s\n", color.Paint(name, text))
 }
