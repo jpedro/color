@@ -7,7 +7,7 @@ script:
 
 
 deploy:
-  # provider: script
+  provider: script
   script:
   - if [ "$TRAVIS_TAG" != "" ]
     then
