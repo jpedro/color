@@ -31,7 +31,7 @@ func Paint(color string, text string) string {
         if termColor, ok := termNames[color[1:len(color)]]; ok {
             return FromHtml(termColor, text)
         }
-        return text
+        return FromName(fallback, text)
     }
 
     // Lower the case for the next rounds
