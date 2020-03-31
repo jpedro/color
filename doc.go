@@ -33,7 +33,7 @@ Sample code:
     func main() {
         color := "pink"
         text := "Hello Universe!"
-        fmt.Printf("%s\n", color.Colorize(color, text))
+        fmt.Printf("%s\n", color.Paint(color, text))
     }
 
 
