@@ -38,6 +38,14 @@ func TestPaintTermName(t *testing.T) {
     }
 }
 
+func TestPaintTermFail(t *testing.T) {
+    expected := "\x1b[32;1mHello\x1b[0m"
+    returned := Paint("@xxx", "Hello")
+    if expected != returned {
+        t.Error("Expected", expected, "got", returned)
+    }
+}
+
 func TestPaintRgb1(t *testing.T) {
     expected := "\x1b[38;2;255;0;255mHello\x1b[0m"
     returned := Paint("#f0f", "Hello")
