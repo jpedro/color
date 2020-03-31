@@ -8,9 +8,7 @@ script:
 
 deploy:
   provider: script
-  script: >-
-    if [ "$TRAVIS_TAG" != "" ]; then
-      GOPROXY=https://proxy.golang.org GO111MODULE=on go get github.com/jpedro/color@$TRAVIS_TAG
-    fi
+  script: |
+    GOPROXY=https://proxy.golang.org GO111MODULE=on go get github.com/jpedro/color@$TRAVIS_TAG
   on:
     tags: true
