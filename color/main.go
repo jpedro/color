@@ -12,20 +12,21 @@ func main() {
     var name string
     var text string
 
-    if len(os.Args) < 2 {
-        fmt.Println("Usage: $0 [color] <text>")
-        return
+    fallback := os.Getenv("COLOR_FALLBACK")
+    if fallback == "" {
+        fallback = "green"
     }
 
-    if len(os.Args) == 2 {
-        fallback := os.Getenv("COLOR_FALLBACK")
-        if fallback == "" {
-            fallback = "green"
-        }
+    switch {
+    case len(os.Args) < 2:
+        fmt.Println("Usage: color [color=" + fallback + "] <text>")
+        return
+
+    case len(os.Args) == 2:
         name = fallback
         text = strings.Join(os.Args[1:], " ")
 
-    } else {
+    default:
         name = os.Args[1]
         text = strings.Join(os.Args[2:], " ")
     }
