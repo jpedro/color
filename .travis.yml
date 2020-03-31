@@ -11,6 +11,5 @@ deploy:
   skip_cleanup: true
   script: >-
     GOPROXY=https://proxy.golang.org GO111MODULE=on go get github.com/jpedro/color@$TRAVIS_TAG
-    /bin/cat go.mod
   on:
     tags: true
