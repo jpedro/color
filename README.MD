@@ -5,6 +5,8 @@
 
 Library and example binary for colouring shell output.
 
+[![asciicast](https://asciinema.org/a/I41lfgMMXr2z9QmAjyFmWQYCd.svg)](https://asciinema.org/a/I41lfgMMXr2z9QmAjyFmWQYCd)
+
 
 ## Installation
 
@@ -13,9 +15,9 @@ Library and example binary for colouring shell output.
 ## Usage
 
     color green 'Hello green world!'
-    color 208 WELCOME TO MY ORANGE UNIVERSE
+    color 208 Welcome to an orange universe
     color "#0c0" "This is also green"
-    color "@SpringGreen5" "SpringGreen5 is apparently one of the 256 named term colors"
+    color "@SpringGreen5" "SpringGreen5 is one of the 256 named term colors"
 
 
 ## Todos
