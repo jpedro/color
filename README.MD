@@ -5,7 +5,7 @@
 
 Library and example binary for colouring shell output.
 
-https://raw.githubusercontent.com/jpedro/color/master/.github/img/cast.gif "Example"
+![Example](https://raw.githubusercontent.com/jpedro/color/master/.github/img/cast.gif "Example")
 
 
 ## Installation
