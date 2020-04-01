@@ -5,7 +5,7 @@
 
 Library and example binary for colouring shell output.
 
-[![asciicast](https://asciinema.org/a/I41lfgMMXr2z9QmAjyFmWQYCd.svg)](https://asciinema.org/a/I41lfgMMXr2z9QmAjyFmWQYCd)
+https://raw.githubusercontent.com/jpedro/color/master/.github/img/cast.gif "Example"
 
 
 ## Installation
