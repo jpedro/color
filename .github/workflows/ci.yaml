@@ -39,6 +39,11 @@ jobs:
         cd example
         go run main.go
 
+    - name: Test cli
+      run: |
+        go get github.com/jpedro/color/cli/color
+        color green 'Hello green world!'
+
     - name: Send slack notification
       uses: 8398a7/action-slack@v3
       if: always()
