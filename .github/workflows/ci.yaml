@@ -41,6 +41,7 @@ jobs:
 
     - name: Test cli
       run: |
+        echo "In $(pwd)"
         go get github.com/jpedro/color/cli/color
         color green 'Hello green world!'
 
