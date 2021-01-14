@@ -1,4 +1,4 @@
-name: run tests
+name: Test library
 
 on:
 - push
@@ -33,6 +33,11 @@ jobs:
         # go test -v -covermode=count
         # go test -cover -coverprofile coverage.out
         # go tool cover -func=coverage.out
+
+    - name: Run example
+      run: |
+        cd example
+        go run main.go
 
     - name: Send slack notification
       uses: 8398a7/action-slack@v3
