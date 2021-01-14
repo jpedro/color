@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	name := "green"
-	text := "hello"
-    fmt.Printf("%s\n", color.Paint(name, text))
+    name := "green"
+    text := "hello"
+    fmt.Println(color.Paint(name, text))
 }
