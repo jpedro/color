@@ -9,6 +9,7 @@ Go cli to print colored text.
 
     $ go get github.com/jpedro/color/cli/color
 
+
 ## Usage
 
     # Basic shell named color
