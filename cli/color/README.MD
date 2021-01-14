@@ -7,11 +7,18 @@ Go cli to print colored text.
 
 ## Installation
 
-    go get github.com/jpedro/color/cli/color
+    $ go get github.com/jpedro/color/cli/color
 
 ## Usage
 
-    color green 'Hello green world!'
-    color 208 Welcome to an orange universe
-    color "#0c0" "This is also green"
-    color "@SpringGreen5" "SpringGreen5 is one of the 256 named term colors"
+    # Basic shell named color
+    $ color green 'Hello green world!'
+
+    # Use an extended shell int color code
+    $ color 208 Welcome to an orange universe
+
+    # Use the closest shell for an HTML color
+    $ color "#0c0" "This is also green... 'ish"
+
+    # One of the 256 extra named colors
+    $ color "@SpringGreen5" "SpringGreen5 is one of the 256 named term colors"
