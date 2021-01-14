@@ -22,6 +22,14 @@ jobs:
       uses: golangci/golangci-lint-action@v2
       with:
         version: v1.29
+    - name: Send slack notification
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      if: always()
 
   test:
     strategy:
@@ -42,6 +50,14 @@ jobs:
         go test -v -covermode=count
         # go test -cover -coverprofile coverage.out
         # go tool cover -func=coverage.out
+    - name: Send slack notification
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      if: always()
 
   coverage:
     runs-on: ubuntu-latest
@@ -63,3 +79,12 @@ jobs:
     #   with:
     #       github-token: ${{ secrets.github_token }}
     #       path-to-lcov: coverage.lcov
+
+    - name: Send slack notification
+      uses: 8398a7/action-slack@v3
+      with:
+        status: ${{ job.status }}
+        fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      if: always()
