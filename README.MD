@@ -10,7 +10,7 @@ Library and example binary for colouring shell output.
 
 ## Installation
 
-    go get github.com/jpedro/color/color
+    go get github.com/jpedro/color/cli/color
 
 ## Usage
 
