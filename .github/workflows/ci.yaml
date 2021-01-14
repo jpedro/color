@@ -1,12 +1,14 @@
-on:
-  push:
-    branches:
-    - master
-  pull_request:
-    branches:
-    - master
-
 name: run tests
+
+on:
+- push
+- pull_request
+  # push:
+  #   branches:
+  #   - master
+  # pull_request:
+  #   branches:
+  #   - master
 
 jobs:
   lint:
@@ -25,24 +27,21 @@ jobs:
       with:
         version: v1.29
 
-    - name: Calc coverage
-      run: |
-        go test -v -covermode=count -coverprofile=coverage.out
-
     - name: Run tests
       run: |
-        go test -v -covermode=count
+        go test -v -covermode=count -coverprofile=coverage.out
+        # go test -v -covermode=count
         # go test -cover -coverprofile coverage.out
         # go tool cover -func=coverage.out
 
     - name: Send slack notification
       uses: 8398a7/action-slack@v3
+      if: always()
       with:
         status: ${{ job.status }}
         fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
       env:
         SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      if: always()
 
   # test:
   #   strategy:
@@ -92,12 +91,3 @@ jobs:
   # #   #   with:
   # #   #       github-token: ${{ secrets.github_token }}
   # #   #       path-to-lcov: coverage.lcov
-
-  # #   - name: Send slack notification
-  # #     uses: 8398a7/action-slack@v3
-  # #     with:
-  # #       status: ${{ job.status }}
-  # #       fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
-  # #     env:
-  # #       SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-  # #     if: always()
