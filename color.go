@@ -28,7 +28,8 @@ func Paint(color string, text string) string {
 
     // Check if we have a term named color, like "@CornflowerBlue"
     if color[0] == '@' {
-        if termColor, ok := termNames[color[1:len(color)]]; ok {
+        termColor, ok := termNames[color[1:]]
+        if ok {
             return FromHtml(termColor, text)
         }
         return FromName(fallback, text)
@@ -43,11 +44,13 @@ func Paint(color string, text string) string {
     }
 
     // Finally we do the regex things
-    if m, _ := regexp.MatchString("^#[0-9a-f]{6}$", color); m {
+    matches, _ := regexp.MatchString("^#[0-9a-f]{6}$", color)
+    if matches {
         return FromHtml(color, text)
     }
 
-    if m, _ := regexp.MatchString("^#[0-9a-f]{3}$", color); m {
+    matches, _ = regexp.MatchString("^#[0-9a-f]{3}$", color);
+    if matches {
         htmlColor := fmt.Sprintf(
             "#%s%s%s%s%s%s",
             string(color[1]),
