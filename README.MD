@@ -1,7 +1,7 @@
 # Color
 
-[![Build Status](https://travis-ci.org/jpedro/color.svg?branch=master)](https://travis-ci.org/jpedro/color)
-![Build Status](https://action-badges.now.sh/jpedro/color)
+[![Travis Status](https://travis-ci.org/jpedro/color.svg?branch=master)](https://travis-ci.org/jpedro/color)
+[![Build Status](https://action-badges.now.sh/jpedro/color)](https://github.com/jpedro/color/actions)
 [![GoDoc](https://godoc.org/github.com/jpedro/color?status.svg)](https://godoc.org/github.com/jpedro/color)
 
 Go library to add shell color to text.
