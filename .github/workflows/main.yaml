@@ -3,12 +3,6 @@ name: Test library
 on:
 - push
 - pull_request
-  # push:
-  #   branches:
-  #   - master
-  # pull_request:
-  #   branches:
-  #   - master
 
 jobs:
   test:
@@ -40,7 +34,7 @@ jobs:
         cd example
         go run main.go
 
-    - name: Test cli
+    - name: Run cli
       run: |
         echo "In $(pwd)"
         cd ~
