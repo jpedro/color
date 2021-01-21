@@ -1,0 +1,49 @@
+name: tests
+
+on:
+- push
+- pull_request
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install Go
+      uses: actions/setup-go@v2
+      with:
+        go-version: 1.15.x
+
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Run the linters
+      uses: golangci/golangci-lint-action@v2
+      with:
+        version: v1.29
+
+    - name: Run the tests
+      run: |
+        go test -v -covermode=count -coverprofile=coverage.out
+
+    - name: Test the example
+      run: |
+        cd example
+        go run main.go
+
+    - name: Test the cli
+      run: |
+        echo "In $(pwd)"
+        cd ~
+        go get github.com/jpedro/color/cli/color
+        color 'Hello default color'
+        color orange 'Hello green world!'
+
+    - name: Notify slack
+      uses: 8398a7/action-slack@v3
+      if: always()
+      with:
+        status: ${{ job.status }}
+        fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
+      env:
+        SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

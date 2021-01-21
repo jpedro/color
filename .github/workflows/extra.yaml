@@ -1,4 +1,4 @@
-name: main
+name: extra
 
 on:
 - push
@@ -17,24 +17,24 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Run linters
+    - name: Run the linters
       uses: golangci/golangci-lint-action@v2
       with:
         version: v1.29
 
-    - name: Run tests
+    - name: Run the tests
       run: |
         go test -v -covermode=count -coverprofile=coverage.out
         # go test -v -covermode=count
         # go test -cover -coverprofile coverage.out
         # go tool cover -func=coverage.out
 
-    - name: Run example
+    - name: Test the example
       run: |
         cd example
         go run main.go
 
-    - name: Run cli
+    - name: Test the cli
       run: |
         echo "In $(pwd)"
         cd ~
