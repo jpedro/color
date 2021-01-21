@@ -8,7 +8,7 @@
 // shank shankle shoulder.
 
 /*
-Library for colouring strings.
+Package color is a library for colouring strings.
 
 
 Installation
@@ -31,9 +31,9 @@ Sample code:
     )
 
     func main() {
-        color := "pink"
+        color := "orange"
         text := "Hello Universe!"
-        fmt.Printf("%s\n", color.Paint(color, text))
+        fmt.Println(color.Paint(color, text))
     }
 
 
