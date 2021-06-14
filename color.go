@@ -99,6 +99,11 @@ func Magenta(text interface{}, args ...interface{}) string {
 	return Paint("magenta", text, args...)
 }
 
+// Shortcut for color.Paint("gray", text)
+func Gray(text interface{}, args ...interface{}) string {
+	return Paint("gray", text, args...)
+}
+
 // Concatenates text and args
 func getText(text interface{}, args ...interface{}) string {
 	message := ""
