@@ -1,13 +1,11 @@
 package main
 
 import (
-    "fmt"
+	"fmt"
 
-    "github.com/jpedro/color"
+	"github.com/jpedro/color"
 )
 
 func main() {
-    name := "green"
-    text := "hello"
-    fmt.Println(color.Paint(name, text))
+	fmt.Println(color.Paint("orange", "Hello %s!", "Universe"))
 }

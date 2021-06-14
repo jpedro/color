@@ -1,0 +1,255 @@
+
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+		<title>color: Go Coverage Report</title>
+		<style>
+			body {
+				background: black;
+				color: rgb(80, 80, 80);
+			}
+			body, pre, #legend span {
+				font-family: Menlo, monospace;
+				font-weight: bold;
+			}
+			#topbar {
+				background: black;
+				position: fixed;
+				top: 0; left: 0; right: 0;
+				height: 42px;
+				border-bottom: 1px solid rgb(80, 80, 80);
+			}
+			#content {
+				margin-top: 50px;
+			}
+			#nav, #legend {
+				float: left;
+				margin-left: 10px;
+			}
+			#legend {
+				margin-top: 12px;
+			}
+			#nav {
+				margin-top: 10px;
+			}
+			#legend span {
+				margin: 0 5px;
+			}
+			.cov0 { color: rgb(192, 0, 0) }
+.cov1 { color: rgb(128, 128, 128) }
+.cov2 { color: rgb(116, 140, 131) }
+.cov3 { color: rgb(104, 152, 134) }
+.cov4 { color: rgb(92, 164, 137) }
+.cov5 { color: rgb(80, 176, 140) }
+.cov6 { color: rgb(68, 188, 143) }
+.cov7 { color: rgb(56, 200, 146) }
+.cov8 { color: rgb(44, 212, 149) }
+.cov9 { color: rgb(32, 224, 152) }
+.cov10 { color: rgb(20, 236, 155) }
+
+		</style>
+	</head>
+	<body>
+		<div id="topbar">
+			<div id="nav">
+				<select id="files">
+				
+				<option value="file0">github.com/jpedro/color/color.go (97.9%)</option>
+				
+				</select>
+			</div>
+			<div id="legend">
+				<span>not tracked</span>
+			
+				<span class="cov0">not covered</span>
+				<span class="cov8">covered</span>
+			
+			</div>
+		</div>
+		<div id="content">
+		
+		<pre class="file" id="file0" style="display: none">package color
+
+import (
+        "fmt"
+        "os"
+        "regexp"
+        "strconv"
+        "strings"
+)
+
+var (
+        defaultCode = "38;5;%s"
+        escape      = "\x1b["
+        reset       = "\x1b[0m"
+)
+
+// Returns the shell output for a coloured text
+func Paint(color string, text interface{}, args ...interface{}) string <span class="cov8" title="1">{
+        message := getText(text, args...)
+
+        fallback := os.Getenv("COLOR_FALLBACK")
+        if fallback == "" </span><span class="cov8" title="1">{
+                fallback = "green"
+        }</span>
+
+        // Check if we have a numeric color
+        <span class="cov8" title="1">i, _ := strconv.Atoi(color)
+        s := strconv.Itoa(i)
+        if s == color </span><span class="cov8" title="1">{
+                return fromNumber(color, message)
+        }</span>
+
+        // Check if we have a term named color, like "@CornflowerBlue"
+        <span class="cov8" title="1">if color[0] == '@' </span><span class="cov8" title="1">{
+                termColor, ok := termNames[color[1:]]
+                if ok </span><span class="cov8" title="1">{
+                        return fromHtml(termColor, message)
+                }</span>
+                <span class="cov8" title="1">return fromName(fallback, message)</span>
+        }
+
+        // Lower the case for the next rounds
+        <span class="cov8" title="1">color = strings.ToLower(color)
+
+        // Check if we have a basic color name
+        if _, ok := basicNames[color]; ok </span><span class="cov8" title="1">{
+                return fromName(color, message)
+        }</span>
+
+        // Finally we do the regex things
+        <span class="cov8" title="1">matches, _ := regexp.MatchString("^#[0-9a-f]{6}$", color)
+        if matches </span><span class="cov8" title="1">{
+                return fromHtml(color, message)
+        }</span>
+
+        <span class="cov8" title="1">matches, _ = regexp.MatchString("^#[0-9a-f]{3}$", color)
+        if matches </span><span class="cov8" title="1">{
+                htmlColor := fmt.Sprintf(
+                        "#%s%s%s%s%s%s",
+                        string(color[1]),
+                        string(color[1]),
+                        string(color[2]),
+                        string(color[2]),
+                        string(color[3]),
+                        string(color[3]))
+                return fromHtml(htmlColor, message)
+        }</span>
+
+        <span class="cov8" title="1">return fromName(fallback, message)</span>
+}
+
+// Shortcut for color.Paint("green", text)
+func Green(text interface{}, args ...interface{}) string <span class="cov8" title="1">{
+        return Paint("green", text, args...)
+}</span>
+
+// Shortcut for color.Paint("yellow", text)
+func Yellow(text interface{}, args ...interface{}) string <span class="cov8" title="1">{
+        return Paint("yellow", text, args...)
+}</span>
+
+// Shortcut for color.Paint("red", text)
+func Red(text interface{}, args ...interface{}) string <span class="cov8" title="1">{
+        return Paint("red", text, args...)
+}</span>
+
+// Concatenates text and args into a string
+func getText(text interface{}, args ...interface{}) string <span class="cov8" title="1">{
+        message := ""
+
+        switch value := text.(type) </span>{
+        case uint:<span class="cov0" title="0"></span>
+        case int:<span class="cov8" title="1">
+                message = fmt.Sprintf("%d", value)</span>
+                // fmt.Printf("==&gt; INT: %d\n", innerType)
+        case float32:<span class="cov0" title="0"></span>
+        case float64:<span class="cov8" title="1">
+                message = fmt.Sprintf("%0.2f", value)</span>
+                // fmt.Printf("==&gt; FLOAT: %0.2f\n", innerType)
+        case bool:<span class="cov8" title="1">
+                message = fmt.Sprintf("%t", value)</span>
+                // fmt.Printf("==&gt; BOOL: %t\n", innerType)
+        case rune:<span class="cov8" title="1">
+                message = string(value)</span>
+                // fmt.Printf("==&gt; RUNE: %q\n", innerType)
+        case string:<span class="cov8" title="1">
+                message = value</span>
+                // fmt.Printf("==&gt; STRING: %s\n", innerType)
+        default:<span class="cov0" title="0">
+                message = fmt.Sprintf("%v", value)</span>
+                // fmt.Printf("==&gt; Type: %v\n", innerType)
+        }
+
+        // fmt.Printf("==&gt; Format: %s\n", message)
+        <span class="cov8" title="1">if len(args) &gt; 0 </span><span class="cov8" title="1">{
+                // fmt.Printf("    ARGS: %v\n", args)
+                message = fmt.Sprintf(message, args...)
+        }</span>
+        // fmt.Printf("==&gt; Text: %s\n", message)
+
+        <span class="cov8" title="1">return message</span>
+}
+
+// Returns the closest shell colour string from an html hex color (#rrggbb)
+func fromHtml(color string, text string) string <span class="cov8" title="1">{
+        r, g, b := html2Rgb(color)
+        return fmt.Sprintf(escape+"38;2;%v;%v;%vm%s"+reset, r, g, b, text)
+}</span>
+
+// Returns the (r,g, b) tupple for an html hex color
+func html2Rgb(color string) (r uint8, g uint8, b uint8) <span class="cov8" title="1">{
+        hexFormat := "#%02x%02x%02x"
+        fmt.Sscanf(color, hexFormat, &amp;r, &amp;g, &amp;b)
+        return
+}</span>
+
+// Returns the selected basic named color
+func fromName(color string, text string) string <span class="cov8" title="1">{
+        code := basicNames[color]
+
+        // if code == "" {
+        //  code = fmt.Sprintf(defaultCode, color)
+        // }
+
+        return fmt.Sprintf(escape+"%sm%s"+reset, code, text)
+}</span>
+
+// Returns the selected numeric color
+func fromNumber(color string, text string) string <span class="cov8" title="1">{
+        code := fmt.Sprintf(defaultCode, color)
+        return fmt.Sprintf(escape+"%sm%s"+reset, code, text)
+}</span>
+</pre>
+		
+		</div>
+	</body>
+	<script>
+	(function() {
+		var files = document.getElementById('files');
+		var visible;
+		files.addEventListener('change', onChange, false);
+		function select(part) {
+			if (visible)
+				visible.style.display = 'none';
+			visible = document.getElementById(part);
+			if (!visible)
+				return;
+			files.value = part;
+			visible.style.display = 'block';
+			location.hash = part;
+		}
+		function onChange() {
+			select(files.value);
+			window.scrollTo(0, 0);
+		}
+		if (location.hash != "") {
+			select(location.hash.substr(1));
+		}
+		if (!visible) {
+			select("file0");
+		}
+	})();
+	</script>
+</html>

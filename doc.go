@@ -31,9 +31,7 @@ Sample code:
     )
 
     func main() {
-        color := "orange"
-        text := "Hello Universe!"
-        fmt.Println(color.Paint(color, text))
+        fmt.Println(color.Paint("orange", "Hello %s!", "Universe"))
     }
 
 
