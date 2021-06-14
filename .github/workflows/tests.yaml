@@ -37,8 +37,8 @@ jobs:
 
     - name: Test the cli
       run: |
-        mkdir cli
-        cd cli
+        mkdir cli-test
+        cd cli-test
         echo "In $(pwd)"
         go get github.com/jpedro/color/cli/color
         color 'Hello default color'
