@@ -38,8 +38,8 @@ jobs:
     - name: Test the cli
       run: |
         go get github.com/jpedro/color/cli/color
-        color 'Hello default color'
-        color orange 'Hello orange!'
+        color 'This is the default color'
+        color orange 'And this is orange!'
 
     - name: Notify slack
       uses: 8398a7/action-slack@v3

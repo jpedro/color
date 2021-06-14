@@ -13,7 +13,7 @@ Go cli to print colored text.
 ## Usage
 
     # Basic shell named color
-    $ color green 'Hello green world!'
+    $ color green 'Hello green!'
 
     # Use an extended shell int color code
     $ color 208 Welcome to an orange universe
