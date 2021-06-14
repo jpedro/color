@@ -1,35 +1,35 @@
 package main
 
 import (
-    "os"
-    "fmt"
-    "strings"
+	"fmt"
+	"os"
+	"strings"
 
-    "github.com/jpedro/color"
+	"github.com/jpedro/color"
 )
 
 func main() {
-    var name string
-    var text string
+	var name string
+	var text string
 
-    fallback := os.Getenv("COLOR_FALLBACK")
-    if fallback == "" {
-        fallback = "green"
-    }
+	fallback := os.Getenv("COLOR_FALLBACK")
+	if fallback == "" {
+		fallback = "green"
+	}
 
-    switch {
-    case len(os.Args) < 2:
-        fmt.Println("Usage: color [color=" + fallback + "] <text>")
-        return
+	switch {
+	case len(os.Args) < 2:
+		fmt.Printf("Usage: color [color=%s] <text>\n", fallback)
+		return
 
-    case len(os.Args) == 2:
-        name = fallback
-        text = strings.Join(os.Args[1:], " ")
+	case len(os.Args) == 2:
+		name = fallback
+		text = strings.Join(os.Args[1:], " ")
 
-    default:
-        name = os.Args[1]
-        text = strings.Join(os.Args[2:], " ")
-    }
+	default:
+		name = os.Args[1]
+		text = strings.Join(os.Args[2:], " ")
+	}
 
-    fmt.Printf("%s\n", color.Paint(name, text))
+	fmt.Printf("%s\n", color.Paint(name, text))
 }
