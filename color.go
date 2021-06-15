@@ -8,10 +8,15 @@ import (
 	"strings"
 )
 
-var (
+const (
+	// Default code format for extra colors
 	defaultCode = "38;5;%s"
-	escape      = "\x1b["
-	reset       = "\x1b[0m"
+
+	// Escape sequence
+	escape = "\x1b["
+
+	// Reset sequence
+	reset = "\x1b[0m"
 )
 
 // Returns shell coloured output for text and args
