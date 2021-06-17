@@ -34,26 +34,31 @@ func NewColor() *Color {
 	return color
 }
 
+// Select a color for your foreground
 func (c *Color) Foreground(text string) *Color {
 	c.foreground = text
 	return c
 }
 
+// Select a color for your background
 func (c *Color) Background(text string) *Color {
 	c.background = text
 	return c
 }
 
+// Turns the text bold
 func (c *Color) Bold() *Color {
 	c.bold = true
 	return c
 }
 
+// Turns the text underlined
 func (c *Color) Underline() *Color {
 	c.underline = true
 	return c
 }
 
+// Paints text and args according to its settings
 func (c *Color) Paint(text interface{}, args ...interface{}) string {
 	message := getText(text, args...)
 
@@ -86,8 +91,8 @@ func (c *Color) Paint(text interface{}, args ...interface{}) string {
 	return fmt.Sprintf("%s%sm%s%s", escape, c.format, message, reset)
 }
 
-// Returns a painted string with group like "{green|this should be green}"
-// replaced with "this should be green" in green color
+// Returns a painted string with groups like `{green|this should be green}`
+// replaced with `this should be green` in green color
 func Parse(text string, args ...interface{}) string {
 	replace := text
 	matches := parseRegex.FindAllStringSubmatch(text, -1)

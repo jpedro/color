@@ -6,16 +6,18 @@
 // ribs alcatra. Turkey frankfurter ham hock boudin. Pork belly capicola hamburger
 // ham hock burgdoggen fatback pancetta swine picanha turducken landjaeger pastrami
 // shank shankle shoulder.
+//
+// Only the last block of comments are not ignored.
 
 /*
-Package color is a library for colouring strings.
+Color is a library for colouring things.
 
 
 Installation
 
-Install with `go get`:
+Install the cli with:
 
-   go get github.com/jpedro/color
+   go get github.com/jpedro/color/cli/color
 
 
 Usage
@@ -31,7 +33,7 @@ Sample code:
     )
 
     func main() {
-        fmt.Println(color.Paint("orange", "Hello %s!", "Universe"))
+        fmt.Println(color.Green("Hello %s!", "lush green"))
     }
 
 

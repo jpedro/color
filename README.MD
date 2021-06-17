@@ -4,7 +4,7 @@
 [![Github Status](https://github.com/jpedro/color/workflows/tests/badge.svg)](https://github.com/jpedro/color/actions)
 [![GoDoc](https://godoc.org/github.com/jpedro/color?status.svg)](https://godoc.org/github.com/jpedro/color)
 
-Go library to add shell color to text.
+Color is a library for colouring things.
 
 
 ## Usage
@@ -14,14 +14,15 @@ package main
 
 import (
     "fmt"
+    "runtime"
 
     "github.com/jpedro/color"
 )
 
 func main() {
     name := "green"
-    text := "hello"
-    fmt.Println(color.Paint(name, text))
+    text := "Runtime OS: %s"
+    fmt.Println(color.Paint(name, text, runtime.GOOS))
 }
 ```
 
@@ -31,5 +32,6 @@ Check the [cli/color](cli/color) for your terminal needs.
 ## Todos
 
 - [x] Create fallback color
-- [x] Add color groups. Now done via `color.Parse`
+- [x] Add color groups. Now via `color.Parse()`
+- [x] Add custom color painters. Now via `color.NewColor()`
 - [ ] Name all the 256 term colors
