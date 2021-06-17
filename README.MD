@@ -25,10 +25,11 @@ func main() {
 }
 ```
 
-Check the [cli/color](cli/color) for your cli needs.
+Check the [cli/color](cli/color) for your terminal needs.
 
 
 ## Todos
 
 - [x] Create fallback color
+- [x] Add color groups. Now done via `color.Parse`
 - [ ] Name all the 256 term colors
