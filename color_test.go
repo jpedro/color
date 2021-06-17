@@ -10,6 +10,7 @@
 package color
 
 import (
+	"fmt"
 	"os"
 	"testing"
 )
@@ -194,10 +195,24 @@ func TestParse(t *testing.T) {
 }
 
 func TestParseArgs(t *testing.T) {
-	expected := "Hello " + escape + "31;1mFAIL" + reset + " and " + escape + "32;1mPASS" + reset + "!"
-	returned := Parse("Hello {red|%s} and {green|%s}!", "FAIL", "PASS")
+	expected := "Hello " + escape + "31;1mFAIL" + reset + " and " + escape + "38;5;27mPASS" + reset + "!"
+	returned := Parse("Hello {red|%s} and {27|%s}!", "FAIL", "PASS")
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
 	}
 	// fmt.Println(returned)
+}
+
+func TestParseArgsNumber(t *testing.T) {
+	expected := "Hello " + escape + "31;1mFAIL" + reset + " and " + escape + "38;5;27mPASS" + reset + "!"
+	returned := Parse("Hello {red|%s} and {27|%s}!", "FAIL", "PASS")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+	// fmt.Println(returned)
+}
+
+func TestColor(t *testing.T) {
+	color := NewColor().Background("208").Bold().Underline()
+	fmt.Printf("INFO %s\n", color.Paint("Testing %s.", "blue"))
 }

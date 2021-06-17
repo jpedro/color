@@ -21,6 +21,64 @@ var (
 	groupRegex = regexp.MustCompile(`([^\|]+)\|(.+)`)
 )
 
+type Color struct {
+	foreground string
+	background string
+	bold       bool
+	underline  bool
+}
+
+func NewColor() *Color {
+	color := &Color{}
+	return color
+}
+
+func (c *Color) Foreground(text string) *Color {
+	c.foreground = text
+	return c
+}
+
+func (c *Color) Background(text string) *Color {
+	c.background = text
+	return c
+}
+
+func (c *Color) Bold() *Color {
+	c.bold = true
+	return c
+}
+
+func (c *Color) Underline() *Color {
+	c.underline = true
+	return c
+}
+
+func (c *Color) Paint(text interface{}, args ...interface{}) string {
+	message := getText(text, args...)
+	format := ""
+
+	if c.foreground != "" {
+		format = fmt.Sprintf("%s;38;5;%s", format, c.foreground)
+	}
+
+	if c.background != "" {
+		format = fmt.Sprintf("%s;48;5;%s", format, c.background)
+	}
+
+	if c.bold {
+		format = fmt.Sprintf("%s;1", format)
+	}
+
+	if c.underline {
+		format = fmt.Sprintf("%s;4", format)
+	}
+
+	format = format[1:]
+	// fmt.Printf("INFO %v\n", format)
+
+	return fmt.Sprintf("%s%sm%s%s", escape, format, message, reset)
+}
+
 // Returns a painted string with group like "{green|this should be green}"
 // replaced with "this should be green" in green color
 func Parse(text string, args ...interface{}) string {
@@ -146,14 +204,17 @@ func getText(text interface{}, args ...interface{}) string {
 	case bool:
 		message = fmt.Sprintf("%t", value)
 	case rune:
+		// fmt.Printf("RUNE %s\n", text)
 		message = string(value)
 	case string:
+		// fmt.Printf("STRING %s\n", text)
 		message = value
 	default:
 		message = fmt.Sprintf("%v", value)
 	}
 
 	if len(args) > 0 {
+		// fmt.Printf("ARGS %v\n", args)
 		message = fmt.Sprintf(message, args...)
 	}
 
