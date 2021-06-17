@@ -26,6 +26,7 @@ type Color struct {
 	background string
 	bold       bool
 	underline  bool
+	format     string
 }
 
 func NewColor() *Color {
@@ -55,6 +56,10 @@ func (c *Color) Underline() *Color {
 
 func (c *Color) Paint(text interface{}, args ...interface{}) string {
 	message := getText(text, args...)
+	return fmt.Sprintf("%s%sm%s%s", escape, c.format, message, reset)
+}
+
+func (c *Color) Build() *Color {
 	format := ""
 
 	if c.foreground != "" {
@@ -73,10 +78,8 @@ func (c *Color) Paint(text interface{}, args ...interface{}) string {
 		format = fmt.Sprintf("%s;4", format)
 	}
 
-	format = format[1:]
-	// fmt.Printf("INFO %v\n", format)
-
-	return fmt.Sprintf("%s%sm%s%s", escape, format, message, reset)
+	c.format = format[1:]
+	return c
 }
 
 // Returns a painted string with group like "{green|this should be green}"

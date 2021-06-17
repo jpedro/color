@@ -10,7 +10,6 @@
 package color
 
 import (
-	"fmt"
 	"os"
 	"testing"
 )
@@ -209,10 +208,19 @@ func TestParseArgsNumber(t *testing.T) {
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
 	}
-	// fmt.Println(returned)
 }
 
-func TestColor(t *testing.T) {
-	color := NewColor().Background("208").Bold().Underline()
-	fmt.Printf("INFO %s\n", color.Paint("Testing %s.", "blue"))
+func TestCustomColor(t *testing.T) {
+	color := NewColor().
+		Foreground("230").
+		Background("208").
+		Bold().
+		Underline().
+		Build()
+
+	expected := escape + "38;5;230;48;5;208;1;4mTesting blue." + reset
+	returned := color.Paint("Testing %s.", "blue")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
 }
