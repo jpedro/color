@@ -25,7 +25,7 @@ func main() {
 }
 ```
 
-Check the [cli/color](cli/color) for the cli tool usage.
+Check the [cli/color](cli/color) for your cli needs.
 
 
 ## Todos

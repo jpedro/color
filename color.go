@@ -8,14 +8,17 @@ import (
 	"strings"
 )
 
-var (
+const (
 	defaultCode = "38;5;%s"
 	escape      = "\x1b["
 	reset       = "\x1b[0m"
-	rgb6Regex   = regexp.MustCompile(`^#[0-9a-f]{6}$`)
-	rgb3Regex   = regexp.MustCompile(`^#[0-9a-f]{3}$`)
-	parseRegex  = regexp.MustCompile(`{([^\}]+)}`)
-	groupRegex  = regexp.MustCompile(`([^\|]+)\|(.+)`)
+)
+
+var (
+	rgb6Regex  = regexp.MustCompile(`^#[0-9a-f]{6}$`)
+	rgb3Regex  = regexp.MustCompile(`^#[0-9a-f]{3}$`)
+	parseRegex = regexp.MustCompile(`{([^\}]+)}`)
+	groupRegex = regexp.MustCompile(`([^\|]+)\|(.+)`)
 )
 
 // Returns a painted string with group like "{green|this should be green}"
