@@ -12,7 +12,28 @@ var (
 	defaultCode = "38;5;%s"
 	escape      = "\x1b["
 	reset       = "\x1b[0m"
+	rgb6Regex   = regexp.MustCompile(`^#[0-9a-f]{6}$`)
+	rgb3Regex   = regexp.MustCompile(`^#[0-9a-f]{3}$`)
+	parseRegex  = regexp.MustCompile(`{([^\}]+)}`)
+	groupRegex  = regexp.MustCompile(`([^\|]+)\|(.+)`)
 )
+
+// Returns a painted string with group like "{green|this should be green}"
+// replaced with "this should be green" in green color
+func Parse(text string, args ...interface{}) string {
+	replace := text
+	matches := parseRegex.FindAllStringSubmatch(text, -1)
+	for _, found := range matches {
+		groups := groupRegex.FindAllStringSubmatch(found[1], -1)
+		color := groups[0][1]
+		group := groups[0][2]
+		colored := Paint(color, group)
+		replace = strings.Replace(replace, "{"+color+"|"+group+"}", colored, 1)
+	}
+
+	message := getText(replace, args...)
+	return message
+}
 
 // Returns shell coloured output for text and args
 func Paint(color string, text interface{}, args ...interface{}) string {
@@ -48,13 +69,12 @@ func Paint(color string, text interface{}, args ...interface{}) string {
 	}
 
 	// Finally we do the regex things
-	matches, _ := regexp.MatchString("^#[0-9a-f]{6}$", color)
-	if matches {
+	// matches, _ := regexp.MatchString("^#[0-9a-f]{6}$", color)
+	if rgb6Regex.MatchString(color) {
 		return fromHtml(color, message)
 	}
 
-	matches, _ = regexp.MatchString("^#[0-9a-f]{3}$", color)
-	if matches {
+	if rgb3Regex.MatchString(color) {
 		htmlColor := fmt.Sprintf(
 			"#%s%s%s%s%s%s",
 			string(color[1]),
@@ -102,6 +122,11 @@ func Magenta(text interface{}, args ...interface{}) string {
 // Shortcut for color.Paint("gray", text)
 func Gray(text interface{}, args ...interface{}) string {
 	return Paint("gray", text, args...)
+}
+
+// Shortcut for color.Paint("pale", text)
+func Pale(text interface{}, args ...interface{}) string {
+	return Paint("pale", text, args...)
 }
 
 // Concatenates text and args

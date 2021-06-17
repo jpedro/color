@@ -183,3 +183,21 @@ func TestRed(t *testing.T) {
 		t.Error("Expected", expected, "got", returned)
 	}
 }
+
+func TestParse(t *testing.T) {
+	expected := "Hello " + escape + "31;1mFAIL" + reset + " and " + escape + "32;1mPASS" + reset + "!"
+	returned := Parse("Hello {red|FAIL} and {green|PASS}!")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+	// fmt.Println(returned)
+}
+
+func TestParseArgs(t *testing.T) {
+	expected := "Hello " + escape + "31;1mFAIL" + reset + " and " + escape + "32;1mPASS" + reset + "!"
+	returned := Parse("Hello {red|%s} and {green|%s}!", "FAIL", "PASS")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+	// fmt.Println(returned)
+}
