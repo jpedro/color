@@ -56,30 +56,34 @@ func (c *Color) Underline() *Color {
 
 func (c *Color) Paint(text interface{}, args ...interface{}) string {
 	message := getText(text, args...)
+
+	if c.format == "" {
+		format := ""
+
+		if c.foreground != "" {
+			format = fmt.Sprintf("%s;38;5;%s", format, c.foreground)
+		}
+
+		if c.background != "" {
+			format = fmt.Sprintf("%s;48;5;%s", format, c.background)
+		}
+
+		if c.bold {
+			format = fmt.Sprintf("%s;1", format)
+		}
+
+		if c.underline {
+			format = fmt.Sprintf("%s;4", format)
+		}
+
+		if format == "" {
+			return message
+		}
+
+		c.format = format[1:]
+	}
+
 	return fmt.Sprintf("%s%sm%s%s", escape, c.format, message, reset)
-}
-
-func (c *Color) Build() *Color {
-	format := ""
-
-	if c.foreground != "" {
-		format = fmt.Sprintf("%s;38;5;%s", format, c.foreground)
-	}
-
-	if c.background != "" {
-		format = fmt.Sprintf("%s;48;5;%s", format, c.background)
-	}
-
-	if c.bold {
-		format = fmt.Sprintf("%s;1", format)
-	}
-
-	if c.underline {
-		format = fmt.Sprintf("%s;4", format)
-	}
-
-	c.format = format[1:]
-	return c
 }
 
 // Returns a painted string with group like "{green|this should be green}"

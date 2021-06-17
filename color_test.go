@@ -215,8 +215,7 @@ func TestCustomColor(t *testing.T) {
 		Foreground("230").
 		Background("208").
 		Bold().
-		Underline().
-		Build()
+		Underline()
 
 	expected := escape + "38;5;230;48;5;208;1;4mTesting blue." + reset
 	returned := color.Paint("Testing %s.", "blue")
