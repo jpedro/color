@@ -6,18 +6,20 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	// "encoding/hex"
 )
 
 const (
-	escape   = "\x1b["
-	reset    = "\x1b[0m"
-	extended = "38;5;"
-	hexed    = "38;2;"
+	escape 	 string = "\x1b["
+	reset  	 string = "\x1b[0m"
+	extended string = "38;5;"
+	hexed    string = "38;2;"
 )
 
 var (
-	regexRgb6  = regexp.MustCompile(`^#[0-9a-f]{6}$`)
-	regexRgb3  = regexp.MustCompile(`^#[0-9a-f]{3}$`)
+	// regexRgb6  = regexp.MustCompile(`^#[0-9a-f]{6}$`)
+	// regexRgb3  = regexp.MustCompile(`^#[0-9a-f]{3}$`)
+	// regexRgb   = regexp.MustCompile(`^#[0-9a-f]{3,6}$`)
 	regexParse = regexp.MustCompile(`{([^\}]+)}`)
 	regexGroup = regexp.MustCompile(`([^\|]+)\|(.+)`)
 	fallback   = os.Getenv("COLOR_FALLBACK")
@@ -31,15 +33,21 @@ type Color struct {
 	format     string
 }
 
+type Rgb struct {
+	R uint8
+	G uint8
+	B uint8
+}
+
 func New() *Color {
 	if fallback == "" {
 		fallback = "green"
 	}
 
 	color := &Color{
-		foreground: fallback,
+		// foreground: fallback,
 	}
-	fmt.Printf("Color %v.\n", color)
+	// fmt.Printf("Color %v.\n", color)
 	return color
 }
 
@@ -125,9 +133,9 @@ func Code(color string) string {
 	}
 
 	// Check if we have a numeric color
-	i, _ := strconv.Atoi(color)
-	s := strconv.Itoa(i)
-	if s == color {
+	number, _ := strconv.Atoi(color)
+	text := strconv.Itoa(number)
+	if text == color {
 		return CodeFromNumber(color)
 	}
 
@@ -143,27 +151,13 @@ func Code(color string) string {
 	// Lower the case for the next rounds
 	color = strings.ToLower(color)
 
-	// Check if we have a basic color name
-	if _, ok := basicNames[color]; ok {
-		return CodeFromName(color)
-	}
-
-	// Finally we do the regex things
-	// matches, _ := regexp.MatchString("^#[0-9a-f]{6}$", color)
-	if regexRgb6.MatchString(color) {
+	if color[0] == '#' {
 		return CodeFromHex(color)
 	}
 
-	if regexRgb3.MatchString(color) {
-		htmlColor := fmt.Sprintf(
-			"#%s%s%s%s%s%s",
-			string(color[1]),
-			string(color[1]),
-			string(color[2]),
-			string(color[2]),
-			string(color[3]),
-			string(color[3]))
-		return CodeFromHex(htmlColor)
+	// Check if we have a basic color name
+	if _, ok := basicNames[color]; ok {
+		return CodeFromName(color)
 	}
 
 	return CodeFromName(fallback)
@@ -175,50 +169,6 @@ func Paint(color string, text any, args ...any) string {
 	code := Code(color)
 
 	return fmt.Sprintf("%s%sm%s%s", escape, code, message, reset)
-
-	// // Check if we have a numeric color
-	// i, _ := strconv.Atoi(color)
-	// s := strconv.Itoa(i)
-	// if s == color {
-	// 	return FromNumber(color, message)
-	// }
-
-	// // Check if we have a term named color, like "@CornflowerBlue"
-	// if color[0] == '@' {
-	// 	termColor, ok := termNames[color[1:]]
-	// 	if ok {
-	// 		return FromHex(termColor, message)
-	// 	}
-	// 	return FromName(fallback, message)
-	// }
-
-	// // Lower the case for the next rounds
-	// color = strings.ToLower(color)
-
-	// // Check if we have a basic color name
-	// if _, ok := basicNames[color]; ok {
-	// 	return FromName(color, message)
-	// }
-
-	// // Finally we do the regex things
-	// // matches, _ := regexp.MatchString("^#[0-9a-f]{6}$", color)
-	// if regexRgb6.MatchString(color) {
-	// 	return FromHex(color, message)
-	// }
-
-	// if regexRgb3.MatchString(color) {
-	// 	htmlColor := fmt.Sprintf(
-	// 		"#%s%s%s%s%s%s",
-	// 		string(color[1]),
-	// 		string(color[1]),
-	// 		string(color[2]),
-	// 		string(color[2]),
-	// 		string(color[3]),
-	// 		string(color[3]))
-	// 	return FromHex(htmlColor, message)
-	// }
-
-	// return FromName(fallback, message)
 }
 
 // Shortcut for color.Paint("green", text)
@@ -292,18 +242,49 @@ func getText(text any, args ...any) string {
 	return message
 }
 
-// Returns the closest shell colour string from an html hex color (#rrggbb)
-// func FromHex(color string, text string) string {
-func CodeFromHex(color string) string {
-	r, g, b := Hex2Rgb(color)
-	return fmt.Sprintf("%s;%v;%v;%v", hexed, r, g, b)
+// Returns an (r, g, b) tupple for an html hex color
+func Hex2Rgb(hex string) *Rgb {
+	len := len(hex)
+
+	if len != 4 && len != 7 {
+		return nil
+	}
+
+	if len == 4 {
+		hex = fmt.Sprintf(
+			"#%s%s%s%s%s%s",
+			string(hex[1]),
+			string(hex[1]),
+			string(hex[2]),
+			string(hex[2]),
+			string(hex[3]),
+			string(hex[3]),
+		)
+	}
+
+	rgb := Rgb{}
+	format := "#%02x%02x%02x"
+	fmt.Sscanf(hex, format, &rgb.R, &rgb.G, &rgb.B)
+	return &rgb
+
+	// val, err := hex.DecodeString(color[1:])
+    // if err != nil {
+    //     fmt.Printf("Error: %v", err)
+	// 	return nil
+    // }
+
+    // return &Rgb{val[0], val[1], val[2]}
 }
 
-// Returns an (r, g, b) tupple for an html hex color
-func Hex2Rgb(color string) (r, g, b uint8) {
-	hexFormat := "#%02x%02x%02x"
-	fmt.Sscanf(color, hexFormat, &r, &g, &b)
-	return
+// Returns the closest shell colour string from an html hex color (#rrggbb)
+// func FromHex(color string, text string) string {
+func CodeFromRgb(rgb Rgb) string {
+	return fmt.Sprintf("%s;%d;%d;%d", hexed, rgb.R, rgb.G, rgb.B)
+}
+
+func CodeFromHex(color string) string {
+	rgb := Hex2Rgb(color)
+	return fmt.Sprintf("%s;%d;%d;%d", hexed, rgb.R, rgb.G, rgb.B)
 }
 
 // Returns the selected basic named color
