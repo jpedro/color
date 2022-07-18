@@ -41,6 +41,9 @@ jobs:
 
     - name: Test the cli
       run: |
+        pwd
+        echo ${GOPATH}
+        echo ${GOROOT}
         env
         go install github.com/jpedro/color/cli/color@refactor
         ls -la $GOROOT_1_18_X64/bin
