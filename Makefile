@@ -3,19 +3,19 @@ all: test
 
 .PHONY: test
 test:
-	@# go test -v -covermode=count -coverprofile=coverage.out
-	go test -cover -coverprofile coverage.out
-	go tool cover -func coverage.out
-	go tool cover -html coverage.out -o coverage.html
+	@mkdir -p tmp
+	@# go test -v -covermode=count -coverprofile=tmp/coverage.out
+	go test -cover -coverprofile tmp/coverage.out
+	go tool cover -func tmp/coverage.out
+	go tool cover -html tmp/coverage.out -o tmp/coverage.html
 
 .PHONY: build
-build: test
+build:
 	go build -v ./...
 
 .PHONY: example
-example: build
-	cd example
-	go run .
+example:
+	cd ./example && go run .
 
 .PHONY: deploy
 deploy:

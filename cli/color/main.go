@@ -23,9 +23,8 @@ func main() {
 
 	switch {
 	case len(os.Args) < 2:
-		fmt.Printf("Usage: color [color=%s] <text>\n", fallback)
+		fmt.Printf("%s\n", color.Paint("red", "Usage: color [COLOR] <TEXT>"))
 		os.Exit(1)
-		return
 
 	case len(os.Args) == 2:
 		cmd = os.Args[1]
