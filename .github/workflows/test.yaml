@@ -43,7 +43,7 @@ jobs:
       run: |
         env
         go install github.com/jpedro/color/cli/color@refactor
-        ls -la $GOROOT_1_18_X64
+        ls -la $GOROOT_1_18_X64/bin
         $GOROOT_1_18_X64/color --version
         $GOROOT_1_18_X64/color 'This is the default color'
         $GOROOT_1_18_X64/color orange 'And this is orange!'
