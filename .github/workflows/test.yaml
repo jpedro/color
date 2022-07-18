@@ -37,8 +37,6 @@ jobs:
 
     - name: Test the example
       run: |
-        # cd example
-        # go run .
         make example
 
     - name: Test the cli

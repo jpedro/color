@@ -6,8 +6,6 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-	// "reflect"
-	// "encoding/hex"
 )
 
 const (
@@ -236,13 +234,6 @@ func getText(text any, args ...any) string {
 		// fmt.Printf("BOOL: %t\n", value)
 		message = fmt.Sprintf("%t", value)
 	default:
-		// switch value := text.(type) {
-		// // This is so stupid!
-		// case int32:
-		// 	message = fmt.Sprintf("%d", value)
-		// default:
-		// fmt.Printf("WHAT: %v\n", value)
-		// }
 		message = fmt.Sprintf("%s", value)
 	}
 
@@ -255,7 +246,7 @@ func getText(text any, args ...any) string {
 	return message
 }
 
-// Returns an (r, g, b) tupple for an html hex color
+// Returns an Rgb struct for an (html) hex color
 func Hex2Rgb(hex string) *Rgb {
 	len := len(hex)
 
@@ -290,7 +281,6 @@ func Hex2Rgb(hex string) *Rgb {
 }
 
 // Returns the closest shell colour string from an html hex color (#rrggbb)
-// func FromHex(color string, text string) string {
 func CodeFromRgb(rgb Rgb) string {
 	return fmt.Sprintf("%s;%d;%d;%d", hexed, rgb.R, rgb.G, rgb.B)
 }
@@ -301,18 +291,11 @@ func CodeFromHex(color string) string {
 }
 
 // Returns the selected basic named color
-// func CodeFromName(color string, text string) string {
 func CodeFromName(color string) string {
-	code := basicNames[color]
-	return code
-	// if code == "" {
-	//  code = fmt.Sprintf(defaultCode, color)
-	// }
-	// return fmt.Sprintf(escape+"%sm", code)
+	return basicNames[color]
 }
 
 // Returns the selected numeric color
-// func FromNumber(color string, text string) string {
 func CodeFromNumber(color string) string {
 	return fmt.Sprintf("%s;%s", extended, color)
 }

@@ -8,6 +8,10 @@ import (
 	"github.com/jpedro/color"
 )
 
+const (
+	VERSION string  = "0.1.2"
+)
+
 func main() {
 	var name string
 	var text string
@@ -30,6 +34,10 @@ func main() {
 	default:
 		name = os.Args[1]
 		text = strings.Join(os.Args[2:], " ")
+	}
+
+	if name == "--version" {
+		fmt.Printf("%s.\n", VERSION)
 	}
 
 	fmt.Printf("%s\n", color.Paint(name, text))
