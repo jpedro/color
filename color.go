@@ -222,11 +222,11 @@ func getText(text any, args ...any) string {
 	case string:
 		// fmt.Println("STRING")
 		message = value
-	case rune:
-		// fmt.Printf("RUNE: %s\n", string(value))
-		message = string(value)
-	// int32 must be handled separately :/
-	case int, uint, int8, uint8, int16, uint16, uint32, int64, uint64:
+	// case rune:
+	// 	// fmt.Printf("RUNE: %s\n", string(value))
+	// 	message = string(value)
+	// int32 must be handled separately if runes are allowed :/
+	case int, uint, int8, uint8, int16, uint16, int32, uint32, int64, uint64:
 		// fmt.Printf("INT: %d\n", value)
 		message = fmt.Sprintf("%d", value)
 	case float32, float64:
@@ -236,14 +236,14 @@ func getText(text any, args ...any) string {
 		// fmt.Printf("BOOL: %t\n", value)
 		message = fmt.Sprintf("%t", value)
 	default:
-		switch value := text.(type) {
-		// This is so stupid!
-		case int32:
-			message = fmt.Sprintf("%d", value)
-		default:
-			// fmt.Printf("WHAT: %v\n", value)
-			message = fmt.Sprintf("%s", value)
-		}
+		// switch value := text.(type) {
+		// // This is so stupid!
+		// case int32:
+		// 	message = fmt.Sprintf("%d", value)
+		// default:
+		// fmt.Printf("WHAT: %v\n", value)
+		// }
+		message = fmt.Sprintf("%s", value)
 	}
 
 	if len(args) > 0 {

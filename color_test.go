@@ -146,13 +146,13 @@ func TestPaintBool(t *testing.T) {
 	}
 }
 
-func TestPaintRune(t *testing.T) {
-	expected := escape + "32;1mr" + reset
-	returned := Paint("green", 'r')
-	if expected != returned {
-		t.Error("Expected", expected, "got", returned)
-	}
-}
+// func TestPaintRune(t *testing.T) {
+// 	expected := escape + "32;1mr" + reset
+// 	returned := Paint("green", 'r')
+// 	if expected != returned {
+// 		t.Error("Expected", expected, "got", returned)
+// 	}
+// }
 
 func TestPaintNumber(t *testing.T) {
 	expected := escape + "32;1m123" + reset
