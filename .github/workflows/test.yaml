@@ -40,9 +40,8 @@ jobs:
         make example
 
     - name: Test the cli
-      env:
-        GOPATH: tmp
       run: |
+        export GOPATH="$PWD/tmp"
         mkdir -p $GOPATH
         echo "${GOROOT:-GOROOT is unset}"
         echo "${GOPATH:-GOPATH is unset}"
