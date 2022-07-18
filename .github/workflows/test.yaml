@@ -41,10 +41,12 @@ jobs:
 
     - name: Test the cli
       run: |
+        env
+        export
         go install github.com/jpedro/color/cli/color@refactor
-        color --version
-        color 'This is the default color'
-        color orange 'And this is orange!'
+        $GOPATH/color --version
+        $GOPATH/color 'This is the default color'
+        $GOPATH/color orange 'And this is orange!'
 
     - name: Notify slack
       uses: 8398a7/action-slack@v3
