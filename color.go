@@ -221,7 +221,7 @@ func getText(text any, args ...any) string {
 	case uint, int:
 	case int8, uint8:
 	case int16, uint16:
-	case int32, uint32:
+	case int32, uint32: // rune, char
 	case int64, uint64:
 		message = fmt.Sprintf("%d", value)
 	case float32, float64:
@@ -229,7 +229,7 @@ func getText(text any, args ...any) string {
 	case bool:
 		message = fmt.Sprintf("%t", value)
 	default:
-		message = fmt.Sprintf("%v", value)
+		message = fmt.Sprintf("%s", value)
 	}
 
 	if len(args) > 0 {
