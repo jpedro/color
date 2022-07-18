@@ -13,7 +13,7 @@ var (
 		"orange":  "38;5;208",
 		"purple":  "38;5;213",
 		"salmon":  "38;5;210",
-		"gray":    "38;5;240",
+		"gray":    "38;5;242",
 		"pale":    "38;5;246",
 	}
 
@@ -59,6 +59,7 @@ var (
 		// "DeepSkyBlue6"       : "#00afd7",
 		// "DeepSkyBlue7"       : "#00afff",
 		// "Green5"             : "#00d700",
+		"Pink": "#ff00ff",
 		"SpringGreen5": "#00d75f",
 		"SpringGreen6": "#00d787",
 		"Cyan3":        "#00d7af",

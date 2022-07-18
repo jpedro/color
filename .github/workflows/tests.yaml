@@ -10,23 +10,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
     - name: Install Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v3
       with:
         # go-version: 1.15.x
         go-version: 1.18.x
 
-    - name: Checkout code
-      uses: actions/checkout@v2
-
     - name: Run the linters
-      uses: golangci/golangci-lint-action@v2
+      uses: golangci/golangci-lint-action@v3
       with:
         version: v1.29
 
     - name: Build the code
       run: |
-        go build -v ./...
+        # go build -v ./...
+        make build
 
     - name: Run the tests
       run: |
@@ -35,8 +36,9 @@ jobs:
 
     - name: Test the example
       run: |
-        cd example
-        go run .
+        # cd example
+        # go run .
+        make example
 
     - name: Test the cli
       run: |

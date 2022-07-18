@@ -12,8 +12,8 @@ import (
 const (
 	escape 	 string = "\x1b["
 	reset  	 string = "\x1b[0m"
-	extended string = "38;5;"
-	hexed    string = "38;2;"
+	extended string = "38;5"
+	hexed    string = "38;2"
 )
 
 var (
@@ -216,20 +216,18 @@ func getText(text any, args ...any) string {
 	message := ""
 
 	switch value := text.(type) {
-	case uint:
-	case int:
+	case string:
+		message = value
+	case uint, int:
+	case int8, uint8:
+	case int16, uint16:
+	case int32, uint32:
+	case int64, uint64:
 		message = fmt.Sprintf("%d", value)
-	case float32:
-	case float64:
+	case float32, float64:
 		message = fmt.Sprintf("%0.2f", value)
 	case bool:
 		message = fmt.Sprintf("%t", value)
-	case rune:
-		// fmt.Printf("RUNE %s\n", text)
-		message = string(value)
-	case string:
-		// fmt.Printf("STRING %s\n", text)
-		message = value
 	default:
 		message = fmt.Sprintf("%v", value)
 	}

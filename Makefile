@@ -1,12 +1,23 @@
 .PHONY: all
 all: test
 
+.PHONY: test
+build:
+	go build -v ./...
 
 .PHONY: test
 test:
 	go test -cover -coverprofile coverage.out
 	go tool cover -func coverage.out
 	go tool cover -html coverage.out -o coverage.html
+
+.PHONY: example
+example:
+	@# go test -v -covermode=count -coverprofile=coverage.out
+	go test -cover -coverprofile coverage.out
+	go tool cover -func coverage.out
+	go tool cover -html coverage.out -o coverage.html
+
 
 .PHONY: deploy
 deploy:

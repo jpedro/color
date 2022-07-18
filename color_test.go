@@ -34,6 +34,21 @@ func TestCodeFromName(t *testing.T) {
 	}
 }
 
+func TestCodeFromNumber(t *testing.T) {
+	expected := "38;5;76"
+	returned := CodeFromNumber("76")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+}
+
+func TestHex2RgbNil(t *testing.T) {
+	returned := Hex2Rgb("#wrong")
+	if returned != nil {
+		t.Error("Expected nil", "got", returned)
+	}
+}
+
 func TestHex2Rgb6(t *testing.T) {
 	expected := Rgb{255, 0, 255}
 	returned := Hex2Rgb("#ff00ff")
@@ -78,6 +93,38 @@ func TestCodeName(t *testing.T) {
 func TestPaintWithName(t *testing.T) {
 	expected := escape + "32;1mHello" + reset
 	returned := Paint("green", "Hello")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+}
+
+func TestPaintWithNumber(t *testing.T) {
+	expected := escape + "38;5;76mHello" + reset
+	returned := Paint("76", "Hello")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+}
+
+func TestPaintWithHex6(t *testing.T) {
+	expected := escape + "38;2;255;0;0mHello" + reset
+	returned := Paint("#ff0000", "Hello")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+}
+
+func TestPaintWithHex3(t *testing.T) {
+	expected := escape + "38;2;255;0;0mHello" + reset
+	returned := Paint("#f00", "Hello")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+}
+
+func TestPaintWithExtra(t *testing.T) {
+	expected := escape + "38;2;255;0;255mHello" + reset
+	returned := Paint("@Pink", "Hello")
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
 	}
@@ -234,6 +281,46 @@ func TestRed(t *testing.T) {
 	}
 }
 
+func TestCyan(t *testing.T) {
+	expected := escape + "36;1mHello" + reset
+	returned := Cyan("Hello")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+}
+
+func TestBlue(t *testing.T) {
+	expected := escape + "34;1mHello" + reset
+	returned := Blue("Hello")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+}
+
+func TestMagenta(t *testing.T) {
+	expected := escape + "35;1mHello" + reset
+	returned := Magenta("Hello")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+}
+
+func TestGray(t *testing.T) {
+	expected := escape + "38;5;242mHello" + reset
+	returned := Gray("Hello")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+}
+
+func TestPale(t *testing.T) {
+	expected := escape + "38;5;246mHello" + reset
+	returned := Pale("Hello")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+}
+
 func TestParse(t *testing.T) {
 	expected := "Hello " + escape + "31;1mFAIL" + reset + " and " + escape + "32;1mPASS" + reset + "!"
 	returned := Parse("Hello {red|FAIL} and {green|PASS}!")
@@ -263,10 +350,19 @@ func TestParse(t *testing.T) {
 // 	}
 // }
 
-func TestNew(t *testing.T) {
-	color := New().Foreground("230").Background("208").Bold().Underline()
+func TestNewEmpty(t *testing.T) {
+	c := New()
+	expected := "Hello"
+	returned := c.Paint("Hello")
+	if expected != returned {
+		t.Error("Expected", expected, "got", returned)
+	}
+}
+
+func TestNewCustom(t *testing.T) {
+	c := New().Foreground("230").Background("208").Bold().Underline()
 	expected := escape + "38;5;230;48;5;208;1;4mTesting blue." + reset
-	returned := color.Paint("Testing %s.", "blue")
+	returned := c.Paint("Testing %s.", "blue")
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
 	}
