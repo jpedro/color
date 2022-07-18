@@ -6,6 +6,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	// "reflect"
 	// "encoding/hex"
 )
 
@@ -166,6 +167,7 @@ func Code(color string) string {
 // Returns shell coloured output for text and args
 func Paint(color string, text any, args ...any) string {
 	message := getText(text, args...)
+	// fmt.Printf("-- MESSAGE %s.\n\n", message)
 	code := Code(color)
 
 	return fmt.Sprintf("%s%sm%s%s", escape, code, message, reset)
@@ -213,30 +215,43 @@ func Pale(text any, args ...any) string {
 
 // Concatenates text and args
 func getText(text any, args ...any) string {
+	// fmt.Printf(">>> TEXT %v, %T.\n", text, text)
 	message := ""
 
 	switch value := text.(type) {
 	case string:
+		// fmt.Println("STRING")
 		message = value
-	case uint, int:
-	case int8, uint8:
-	case int16, uint16:
-	case int32, uint32: // rune, char
-	case int64, uint64:
+	case rune:
+		// fmt.Printf("RUNE: %s\n", string(value))
+		message = string(value)
+	// int32 must be handled separately :/
+	case int, uint, int8, uint8, int16, uint16, uint32, int64, uint64:
+		// fmt.Printf("INT: %d\n", value)
 		message = fmt.Sprintf("%d", value)
 	case float32, float64:
+		// fmt.Printf("FLOAT: %0.2f\n", value)
 		message = fmt.Sprintf("%0.2f", value)
 	case bool:
+		// fmt.Printf("BOOL: %t\n", value)
 		message = fmt.Sprintf("%t", value)
 	default:
-		message = fmt.Sprintf("%s", value)
+		switch value := text.(type) {
+		// This is so stupid!
+		case int32:
+			message = fmt.Sprintf("%d", value)
+		default:
+			// fmt.Printf("WHAT: %v\n", value)
+			message = fmt.Sprintf("%s", value)
+		}
 	}
 
 	if len(args) > 0 {
-		// fmt.Printf("ARGS %v\n", args)
+		// fmt.Printf("ARGS: %v\n", args)
 		message = fmt.Sprintf(message, args...)
 	}
 
+	// fmt.Printf("<<< GET TEXT %s.\n", message)
 	return message
 }
 
