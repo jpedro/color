@@ -48,6 +48,7 @@ jobs:
         echo ${GOPATH:-GOPATH is unset}
 
         go install github.com/jpedro/color/cli/color@refactor
+        ls -la $GOPATH
         $GOPATH/color --version
         $GOPATH/color 'This is the default color'
         $GOPATH/color orange 'And this is orange!'
