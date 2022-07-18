@@ -4,6 +4,7 @@ on:
 - push
 - pull_request
 
+
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -12,7 +13,8 @@ jobs:
     - name: Install Go
       uses: actions/setup-go@v2
       with:
-        go-version: 1.15.x
+        # go-version: 1.15.x
+        go-version: 1.18.x
 
     - name: Checkout code
       uses: actions/checkout@v2
@@ -28,12 +30,13 @@ jobs:
 
     - name: Run the tests
       run: |
-        go test -v -covermode=count -coverprofile=coverage.out
+        # go test -v -covermode=count -coverprofile=coverage.out
+        make test
 
     - name: Test the example
       run: |
         cd example
-        go run main.go
+        go run .
 
     - name: Test the cli
       run: |
