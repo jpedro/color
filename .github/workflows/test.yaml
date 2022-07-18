@@ -20,10 +20,10 @@ jobs:
         # go-version: 1.15.x
         go-version: 1.18.x
 
-    - name: Run the linters
-      uses: golangci/golangci-lint-action@v3
-      with:
-        version: v1.29
+    # - name: Run the linters
+    #   uses: golangci/golangci-lint-action@v3
+    #   with:
+    #     version: v1.29
 
     - name: Build the code
       run: |
