@@ -13,8 +13,8 @@ const (
 )
 
 func main() {
-	var name string
-	var text string
+	var cmd string
+	var arg string
 
 	fallback := os.Getenv("COLOR_FALLBACK")
 	if fallback == "" {
@@ -28,17 +28,20 @@ func main() {
 		return
 
 	case len(os.Args) == 2:
-		name = fallback
-		text = strings.Join(os.Args[1:], " ")
+		cmd = os.Args[1]
+		if cmd == "--version" {
+			fmt.Printf("%s\n", VERSION)
+			os.Exit(0)
+		}
+
+		arg = cmd
+		cmd = fallback
+		fmt.Printf("CMD %s.\n", cmd)
 
 	default:
-		name = os.Args[1]
-		text = strings.Join(os.Args[2:], " ")
+		cmd = os.Args[1]
+		arg = strings.Join(os.Args[2:], " ")
 	}
 
-	if name == "--version" {
-		fmt.Printf("%s.\n", VERSION)
-	}
-
-	fmt.Printf("%s\n", color.Paint(name, text))
+	fmt.Printf("%s\n", color.Paint(cmd, arg))
 }
