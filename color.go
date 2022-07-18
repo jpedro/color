@@ -9,16 +9,18 @@ import (
 )
 
 const (
-	defaultCode = "38;5;%s"
-	escape      = "\x1b["
-	reset       = "\x1b[0m"
+	escape   = "\x1b["
+	reset    = "\x1b[0m"
+	extended = "38;5;"
+	hexed    = "38;2;"
 )
 
 var (
-	rgb6Regex  = regexp.MustCompile(`^#[0-9a-f]{6}$`)
-	rgb3Regex  = regexp.MustCompile(`^#[0-9a-f]{3}$`)
-	parseRegex = regexp.MustCompile(`{([^\}]+)}`)
-	groupRegex = regexp.MustCompile(`([^\|]+)\|(.+)`)
+	regexRgb6  = regexp.MustCompile(`^#[0-9a-f]{6}$`)
+	regexRgb3  = regexp.MustCompile(`^#[0-9a-f]{3}$`)
+	regexParse = regexp.MustCompile(`{([^\}]+)}`)
+	regexGroup = regexp.MustCompile(`([^\|]+)\|(.+)`)
+	fallback   = os.Getenv("COLOR_FALLBACK")
 )
 
 type Color struct {
@@ -29,8 +31,15 @@ type Color struct {
 	format     string
 }
 
-func NewColor() *Color {
-	color := &Color{}
+func New() *Color {
+	if fallback == "" {
+		fallback = "green"
+	}
+
+	color := &Color{
+		foreground: fallback,
+	}
+	fmt.Printf("Color %v.\n", color)
 	return color
 }
 
@@ -59,7 +68,7 @@ func (c *Color) Underline() *Color {
 }
 
 // Paints text and args according to its settings
-func (c *Color) Paint(text interface{}, args ...interface{}) string {
+func (c *Color) Paint(text any, args ...any) string {
 	message := getText(text, args...)
 
 	if c.format == "" {
@@ -93,11 +102,11 @@ func (c *Color) Paint(text interface{}, args ...interface{}) string {
 
 // Returns a painted string with groups like `{green|this should be green}`
 // replaced with `this should be green` in green color
-func Parse(text string, args ...interface{}) string {
+func Parse(text string, args ...any) string {
 	replace := text
-	matches := parseRegex.FindAllStringSubmatch(text, -1)
+	matches := regexParse.FindAllStringSubmatch(text, -1)
 	for _, found := range matches {
-		groups := groupRegex.FindAllStringSubmatch(found[1], -1)
+		groups := regexGroup.FindAllStringSubmatch(found[1], -1)
 		color := groups[0][1]
 		group := groups[0][2]
 		colored := Paint(color, group)
@@ -108,10 +117,8 @@ func Parse(text string, args ...interface{}) string {
 	return message
 }
 
-// Returns shell coloured output for text and args
-func Paint(color string, text interface{}, args ...interface{}) string {
-	message := getText(text, args...)
 
+func Code(color string) string {
 	fallback := os.Getenv("COLOR_FALLBACK")
 	if fallback == "" {
 		fallback = "green"
@@ -121,16 +128,16 @@ func Paint(color string, text interface{}, args ...interface{}) string {
 	i, _ := strconv.Atoi(color)
 	s := strconv.Itoa(i)
 	if s == color {
-		return fromNumber(color, message)
+		return CodeFromNumber(color)
 	}
 
 	// Check if we have a term named color, like "@CornflowerBlue"
 	if color[0] == '@' {
 		termColor, ok := termNames[color[1:]]
 		if ok {
-			return fromHtml(termColor, message)
+			return CodeFromHex(termColor)
 		}
-		return fromName(fallback, message)
+		return CodeFromName(fallback)
 	}
 
 	// Lower the case for the next rounds
@@ -138,16 +145,16 @@ func Paint(color string, text interface{}, args ...interface{}) string {
 
 	// Check if we have a basic color name
 	if _, ok := basicNames[color]; ok {
-		return fromName(color, message)
+		return CodeFromName(color)
 	}
 
 	// Finally we do the regex things
 	// matches, _ := regexp.MatchString("^#[0-9a-f]{6}$", color)
-	if rgb6Regex.MatchString(color) {
-		return fromHtml(color, message)
+	if regexRgb6.MatchString(color) {
+		return CodeFromHex(color)
 	}
 
-	if rgb3Regex.MatchString(color) {
+	if regexRgb3.MatchString(color) {
 		htmlColor := fmt.Sprintf(
 			"#%s%s%s%s%s%s",
 			string(color[1]),
@@ -156,54 +163,106 @@ func Paint(color string, text interface{}, args ...interface{}) string {
 			string(color[2]),
 			string(color[3]),
 			string(color[3]))
-		return fromHtml(htmlColor, message)
+		return CodeFromHex(htmlColor)
 	}
 
-	return fromName(fallback, message)
+	return CodeFromName(fallback)
+}
+
+// Returns shell coloured output for text and args
+func Paint(color string, text any, args ...any) string {
+	message := getText(text, args...)
+	code := Code(color)
+
+	return fmt.Sprintf("%s%sm%s%s", escape, code, message, reset)
+
+	// // Check if we have a numeric color
+	// i, _ := strconv.Atoi(color)
+	// s := strconv.Itoa(i)
+	// if s == color {
+	// 	return FromNumber(color, message)
+	// }
+
+	// // Check if we have a term named color, like "@CornflowerBlue"
+	// if color[0] == '@' {
+	// 	termColor, ok := termNames[color[1:]]
+	// 	if ok {
+	// 		return FromHex(termColor, message)
+	// 	}
+	// 	return FromName(fallback, message)
+	// }
+
+	// // Lower the case for the next rounds
+	// color = strings.ToLower(color)
+
+	// // Check if we have a basic color name
+	// if _, ok := basicNames[color]; ok {
+	// 	return FromName(color, message)
+	// }
+
+	// // Finally we do the regex things
+	// // matches, _ := regexp.MatchString("^#[0-9a-f]{6}$", color)
+	// if regexRgb6.MatchString(color) {
+	// 	return FromHex(color, message)
+	// }
+
+	// if regexRgb3.MatchString(color) {
+	// 	htmlColor := fmt.Sprintf(
+	// 		"#%s%s%s%s%s%s",
+	// 		string(color[1]),
+	// 		string(color[1]),
+	// 		string(color[2]),
+	// 		string(color[2]),
+	// 		string(color[3]),
+	// 		string(color[3]))
+	// 	return FromHex(htmlColor, message)
+	// }
+
+	// return FromName(fallback, message)
 }
 
 // Shortcut for color.Paint("green", text)
-func Green(text interface{}, args ...interface{}) string {
+func Green(text any, args ...any) string {
 	return Paint("green", text, args...)
 }
 
 // Shortcut for color.Paint("yellow", text)
-func Yellow(text interface{}, args ...interface{}) string {
+func Yellow(text any, args ...any) string {
 	return Paint("yellow", text, args...)
 }
 
 // Shortcut for color.Paint("red", text)
-func Red(text interface{}, args ...interface{}) string {
+func Red(text any, args ...any) string {
 	return Paint("red", text, args...)
 }
 
 // Shortcut for color.Paint("cyan", text)
-func Cyan(text interface{}, args ...interface{}) string {
+func Cyan(text any, args ...any) string {
 	return Paint("cyan", text, args...)
 }
 
 // Shortcut for color.Paint("blue", text)
-func Blue(text interface{}, args ...interface{}) string {
+func Blue(text any, args ...any) string {
 	return Paint("blue", text, args...)
 }
 
 // Shortcut for color.Paint("magenta", text)
-func Magenta(text interface{}, args ...interface{}) string {
+func Magenta(text any, args ...any) string {
 	return Paint("magenta", text, args...)
 }
 
 // Shortcut for color.Paint("gray", text)
-func Gray(text interface{}, args ...interface{}) string {
+func Gray(text any, args ...any) string {
 	return Paint("gray", text, args...)
 }
 
 // Shortcut for color.Paint("pale", text)
-func Pale(text interface{}, args ...interface{}) string {
+func Pale(text any, args ...any) string {
 	return Paint("pale", text, args...)
 }
 
 // Concatenates text and args
-func getText(text interface{}, args ...interface{}) string {
+func getText(text any, args ...any) string {
 	message := ""
 
 	switch value := text.(type) {
@@ -234,31 +293,32 @@ func getText(text interface{}, args ...interface{}) string {
 }
 
 // Returns the closest shell colour string from an html hex color (#rrggbb)
-func fromHtml(color string, text string) string {
-	r, g, b := hex2Rgb(color)
-	return fmt.Sprintf(escape+"38;2;%v;%v;%vm%s"+reset, r, g, b, text)
+// func FromHex(color string, text string) string {
+func CodeFromHex(color string) string {
+	r, g, b := Hex2Rgb(color)
+	return fmt.Sprintf("%s;%v;%v;%v", hexed, r, g, b)
 }
 
 // Returns an (r, g, b) tupple for an html hex color
-func hex2Rgb(color string) (r, g, b uint8) {
+func Hex2Rgb(color string) (r, g, b uint8) {
 	hexFormat := "#%02x%02x%02x"
 	fmt.Sscanf(color, hexFormat, &r, &g, &b)
 	return
 }
 
 // Returns the selected basic named color
-func fromName(color string, text string) string {
+// func CodeFromName(color string, text string) string {
+func CodeFromName(color string) string {
 	code := basicNames[color]
-
+	return code
 	// if code == "" {
 	//  code = fmt.Sprintf(defaultCode, color)
 	// }
-
-	return fmt.Sprintf(escape+"%sm%s"+reset, code, text)
+	// return fmt.Sprintf(escape+"%sm", code)
 }
 
 // Returns the selected numeric color
-func fromNumber(color string, text string) string {
-	code := fmt.Sprintf(defaultCode, color)
-	return fmt.Sprintf(escape+"%sm%s"+reset, code, text)
+// func FromNumber(color string, text string) string {
+func CodeFromNumber(color string) string {
+	return fmt.Sprintf("%s;%s", extended, color)
 }

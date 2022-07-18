@@ -20,6 +20,7 @@ func main() {
 	switch {
 	case len(os.Args) < 2:
 		fmt.Printf("Usage: color [color=%s] <text>\n", fallback)
+		os.Exit(1)
 		return
 
 	case len(os.Args) == 2:

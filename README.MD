@@ -33,5 +33,5 @@ Check the [cli/color](cli/color) for your terminal needs.
 
 - [x] Create fallback color
 - [x] Add color groups. Now via `color.Parse()`
-- [x] Add custom color painters. Now via `color.NewColor()`
+- [x] Add color instances. Now via `c := color.New()`
 - [ ] Name all the 256 term colors
