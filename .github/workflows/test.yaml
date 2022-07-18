@@ -41,11 +41,11 @@ jobs:
 
     - name: Test the cli
       env:
-        GOPATH: .tmp
+        GOPATH: tmp
       run: |
-        mkdir -p tmp
-        echo ${GOROOT:-GOROOT is unset}
-        echo ${GOPATH:-GOPATH is unset}
+        mkdir -p $GOPATH
+        echo "${GOROOT:-GOROOT is unset}"
+        echo "${GOPATH:-GOPATH is unset}"
 
         go install github.com/jpedro/color/cli/color@refactor
         ls -la $PWD
