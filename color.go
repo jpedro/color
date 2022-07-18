@@ -235,12 +235,12 @@ func getText(text interface{}, args ...interface{}) string {
 
 // Returns the closest shell colour string from an html hex color (#rrggbb)
 func fromHtml(color string, text string) string {
-	r, g, b := html2Rgb(color)
+	r, g, b := hex2Rgb(color)
 	return fmt.Sprintf(escape+"38;2;%v;%v;%vm%s"+reset, r, g, b, text)
 }
 
-// Returns the (r,g, b) tupple for an html hex color
-func html2Rgb(color string) (r uint8, g uint8, b uint8) {
+// Returns an (r, g, b) tupple for an html hex color
+func hex2Rgb(color string) (r, g, b uint8) {
 	hexFormat := "#%02x%02x%02x"
 	fmt.Sscanf(color, hexFormat, &r, &g, &b)
 	return
