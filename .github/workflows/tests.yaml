@@ -18,6 +18,10 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Check go version
+      run: |
+        go version
+
     - name: Run the linters
       uses: golangci/golangci-lint-action@v2
       with:
