@@ -49,6 +49,7 @@ jobs:
         go install github.com/jpedro/color/cli/color@refactor
         ls -la $PWD
         ls -la $GOPATH
+        ls -la $GOPATH/bin
         # $GOPATH/color --version
         # $GOPATH/color 'This is the default color'
         # $GOPATH/color orange 'And this is orange!'
