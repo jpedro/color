@@ -47,12 +47,9 @@ jobs:
         echo "${GOPATH:-GOPATH is unset}"
 
         go install github.com/jpedro/color/cli/color@refactor
-        ls -la $PWD
-        ls -la $GOPATH
-        ls -la $GOPATH/bin
-        # $GOPATH/color --version
-        # $GOPATH/color 'This is the default color'
-        # $GOPATH/color orange 'And this is orange!'
+        $GOPATH/bin/color --version
+        $GOPATH/bin/color 'This is the default color'
+        $GOPATH/bin/color orange 'And this is orange!'
 
     - name: Notify slack
       uses: 8398a7/action-slack@v3
