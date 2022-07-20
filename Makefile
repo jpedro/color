@@ -4,9 +4,9 @@ all: test
 
 .PHONY: test
 test:
-	go test -cover -coverprofile coverage.out
-	go tool cover -func coverage.out
-	go tool cover -html coverage.out -o coverage.html
+	go test -cover -coverprofile tmp/coverage.out
+	go tool cover -func tmp/coverage.out
+	go tool cover -html tmp/coverage.out -o tmp/coverage.html
 
 .PHONY: deploy
 deploy:
