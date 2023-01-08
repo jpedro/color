@@ -4,7 +4,7 @@
 [![Github Status](https://github.com/jpedro/color/workflows/tests/badge.svg)](https://github.com/jpedro/color/actions)
 [![GoDoc](https://godoc.org/github.com/jpedro/color?status.svg)](https://godoc.org/github.com/jpedro/color)
 
-Color is a library for colouring things.
+Library for colouring output.
 
 
 ## Usage
