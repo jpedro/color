@@ -24,8 +24,13 @@ var (
 type Color struct {
 	foreground string
 	background string
-	bold       bool
-	underline  bool
+	bold       bool // 1
+	faint      bool // 2
+	italic     bool // 3
+	underline  bool // 4
+	blink      bool // 5
+	reverse    bool // 7
+	strike     bool // 9
 	format     string
 }
 
@@ -58,6 +63,12 @@ func (c *Color) Underline() *Color {
 	return c
 }
 
+// Turns the text strike
+func (c *Color) Strike() *Color {
+	c.strike = true
+	return c
+}
+
 // Paints text and args according to its settings
 func (c *Color) Paint(text interface{}, args ...interface{}) string {
 	message := getText(text, args...)
@@ -77,8 +88,28 @@ func (c *Color) Paint(text interface{}, args ...interface{}) string {
 			format = fmt.Sprintf("%s;1", format)
 		}
 
+		if c.faint {
+			format = fmt.Sprintf("%s;2", format)
+		}
+
+		if c.italic {
+			format = fmt.Sprintf("%s;3", format)
+		}
+
 		if c.underline {
 			format = fmt.Sprintf("%s;4", format)
+		}
+
+		if c.blink {
+			format = fmt.Sprintf("%s;5", format)
+		}
+
+		if c.reverse {
+			format = fmt.Sprintf("%s;7", format)
+		}
+
+		if c.strike {
+			format = fmt.Sprintf("%s;9", format)
 		}
 
 		if format == "" {
