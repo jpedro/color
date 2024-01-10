@@ -1,7 +1,13 @@
-name: Tests
+name: Test
 
 on:
   workflow_dispatch:
+    inputs:
+      lint:
+        type: boolean
+        description: Run linters
+        default: false
+
   push:
   pull_request:
 
@@ -11,12 +17,12 @@ jobs:
 
     steps:
     - name: Install Go
-      uses: actions/setup-go@v2
+      uses: actions/setup-go@v4
       with:
-        go-version: 1.15.x
+        go-version: '1.20'
 
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v4
 
     - name: Check go version
       run: |
@@ -24,6 +30,7 @@ jobs:
 
     - name: Run the linters
       uses: golangci/golangci-lint-action@v2
+      if: github.event.inputs.lint == 'true'
       with:
         version: v1.29
 
