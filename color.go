@@ -278,7 +278,7 @@ func getCode(color string) string {
 	}
 
 	if rgb3Regex.MatchString(color) {
-		rgb := fmt.Sprintf(
+		html := fmt.Sprintf(
 			"#%s%s%s%s%s%s",
 			string(color[1]),
 			string(color[1]),
@@ -286,7 +286,7 @@ func getCode(color string) string {
 			string(color[2]),
 			string(color[3]),
 			string(color[3]))
-		return getCodeFromHtml(rgb)
+		return getCodeFromHtml(html)
 	}
 
 	return getCodeFromName(fallbackColor)
@@ -323,29 +323,22 @@ func getText(text any, args ...any) string {
 	return message
 }
 
-// Returns the closest shell colour string from an html hex color (#rrggbb)
-func getCodeFromHtml(color string) string {
-	r, g, b := getCodeFromRgb(color)
-	// return fmt.Sprintf(codeEscape+"38;2;%v;%v;%vm%s"+codeReset, r, g, b, text)
-	return fmt.Sprintf("38;2;%v;%v;%v", r, g, b)
+func getCodeFromHtml(color string, foreground bool) string {
+	r, g, b := getRgbFromHtml(color)
+	if foreground {
+		return fmt.Sprintf("38;2;%v;%v;%v", r, g, b)
+	}
+	return fmt.Sprintf("48;2;%v;%v;%v", r, g, b)
 }
 
-// Returns an (r, g, b) tupple for an html hex color
-func getCodeFromRgb(color string) (uint8, uint8, uint8) {
+func getRgbFromHtml(color string) (uint8, uint8, uint8) {
 	var r, g, b uint8
 	fmt.Sscanf(color, "#%02x%02x%02x", &r, &g, &b)
 	return r, g, b
 }
 
-// Returns the selected basic named color
 func getCodeFromName(color string) string {
 	code := namesBasic[color]
-
-	// if code == "" {
-	//  code = fmt.Sprintf(defaultCode, color)
-	// }
-
-	// return fmt.Sprintf(codeEscape+"%sm%s"+codeReset, code, text)
 	return code
 }
 
