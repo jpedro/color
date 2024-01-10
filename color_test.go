@@ -210,14 +210,15 @@ func TestParseArgsNumber(t *testing.T) {
 	}
 }
 
-func TestCustomColor(t *testing.T) {
-	color := color.NewColor().
+func TestNew(t *testing.T) {
+	color := color.New().
 		Foreground("230").
 		Background("208").
 		Bold().
+		Blink().
 		Underline()
 
-	expected := codeEscape + "38;5;230;48;5;208;1;4mTesting blue." + codeReset
+	expected := codeEscape + "38;5;230;48;5;208;1;4;5mTesting blue." + codeReset
 	returned := color.Paint("Testing %s.", "blue")
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
