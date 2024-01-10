@@ -13,6 +13,7 @@ on:
 
 jobs:
   test:
+    name: Test
     runs-on: ubuntu-latest
 
     steps:
@@ -29,10 +30,10 @@ jobs:
         go version
 
     - name: Run the linters
-      uses: golangci/golangci-lint-action@v2
+      uses: golangci/golangci-lint-action@v3
       if: github.event.inputs.lint == 'true'
       with:
-        version: v1.29
+        version: v1.54
 
     - name: Build the code
       run: |
