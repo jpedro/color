@@ -49,7 +49,7 @@ jobs:
 
     - name: Test the cli
       run: |
-        go get github.com/jpedro/color/cli/color
+        go install github.com/jpedro/color/cli/color
         color 'This is the default color'
         color orange 'And this is orange!'
 

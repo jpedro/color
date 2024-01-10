@@ -194,7 +194,6 @@ func TestParseArgs(t *testing.T) {
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
 	}
-	// fmt.Println(returned)
 }
 
 func TestParseArgsNumber(t *testing.T) {
