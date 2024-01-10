@@ -1,7 +1,7 @@
 ---
 name: Feature request
 about: Your idea will be securely safe in /dev/null.
-title: 'Title: Place this securely on /dev/null'
+title: 'Place this securely on /dev/null'
 labels: 'feature'
 assignees: '@jpedro'
 

@@ -7,7 +7,7 @@ Go cli to print colored text.
 
 ## Installation
 
-    $ go get github.com/jpedro/color/cli/color
+    go install github.com/jpedro/color/cli/color
 
 
 ## Usage

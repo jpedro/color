@@ -9,9 +9,9 @@ import (
 )
 
 const (
-	defaultCode = "38;5;%s"
-	escape      = "\x1b["
-	reset       = "\x1b[0m"
+	codeExtra  = "38;5;%s"
+	codeEscape = "\x1b["
+	codeReset  = "\x1b[0m"
 )
 
 var (
@@ -119,7 +119,7 @@ func (c *Color) Paint(text interface{}, args ...interface{}) string {
 		c.format = format[1:]
 	}
 
-	return fmt.Sprintf("%s%sm%s%s", escape, c.format, message, reset)
+	return fmt.Sprintf("%s%sm%s%s", codeEscape, c.format, message, codeReset)
 }
 
 // Returns a painted string with groups like `{green|this should be green}`
@@ -267,7 +267,7 @@ func getText(text interface{}, args ...interface{}) string {
 // Returns the closest shell colour string from an html hex color (#rrggbb)
 func fromHtml(color string, text string) string {
 	r, g, b := hex2Rgb(color)
-	return fmt.Sprintf(escape+"38;2;%v;%v;%vm%s"+reset, r, g, b, text)
+	return fmt.Sprintf(codeEscape+"38;2;%v;%v;%vm%s"+codeReset, r, g, b, text)
 }
 
 // Returns an (r, g, b) tupple for an html hex color
@@ -285,11 +285,11 @@ func fromName(color string, text string) string {
 	//  code = fmt.Sprintf(defaultCode, color)
 	// }
 
-	return fmt.Sprintf(escape+"%sm%s"+reset, code, text)
+	return fmt.Sprintf(codeEscape+"%sm%s"+codeReset, code, text)
 }
 
 // Returns the selected numeric color
 func fromNumber(color string, text string) string {
-	code := fmt.Sprintf(defaultCode, color)
-	return fmt.Sprintf(escape+"%sm%s"+reset, code, text)
+	code := fmt.Sprintf(codeExtra, color)
+	return fmt.Sprintf(codeEscape+"%sm%s"+codeReset, code, text)
 }

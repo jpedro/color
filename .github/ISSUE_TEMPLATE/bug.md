@@ -1,7 +1,7 @@
 ---
 name: Bug report
 about: Modern solutions require modern problems.
-title: 'Title: bugs bunny'
+title: 'Title: bugs a bunny'
 labels: 'bug'
 assignees: 'jpedro'
 
