@@ -1,9 +1,9 @@
 ---
 name: Bug report
-about: Create a report to help us improve
-title: ''
-labels: ''
-assignees: ''
+about: Create a report to help us improve.
+title: 'Title: bugs bunny'
+labels: 'bug'
+assignees: 'jpedro'
 
 ---
 

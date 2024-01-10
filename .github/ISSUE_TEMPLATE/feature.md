@@ -1,8 +1,8 @@
 ---
 name: Feature request
-about: Suggest an idea for this project
-title: ''
-labels: ''
+about: Suggest an idea
+title: 'Title: Place this securely on /dev/null'
+labels: 'feature'
 assignees: '@jpedro'
 
 ---

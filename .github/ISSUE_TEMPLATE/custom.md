@@ -1,10 +1,8 @@
 ---
-name: Custom issue template
-about: Describe this issue template's purpose here.
-title: ''
-labels: ''
-assignees: ''
+name: Something else
+about: Describe this issue purpose here.
+title: 'Title: Something happened'
+labels: 'wontfix'
+assignees: 'ptdorf'
 
 ---
-
-
