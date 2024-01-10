@@ -34,7 +34,12 @@ type Color struct {
 	format     string
 }
 
+// Deprecated: Use just `color.New()`
 func NewColor() *Color {
+	return New()
+}
+
+func New() *Color {
 	color := &Color{}
 	return color
 }
@@ -60,6 +65,12 @@ func (c *Color) Bold() *Color {
 // Turns the text underlined
 func (c *Color) Underline() *Color {
 	c.underline = true
+	return c
+}
+
+// Turns the text strike
+func (c *Color) Blink() *Color {
+	c.blink = true
 	return c
 }
 

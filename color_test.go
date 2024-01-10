@@ -87,7 +87,7 @@ func TestPaintTextWithArgs2(t *testing.T) {
 }
 
 func TestPaintTextWithStruct(t *testing.T) {
-	d := struct {
+	s := struct {
 		yes      bool
 		text     string
 		number   int
@@ -99,7 +99,7 @@ func TestPaintTextWithStruct(t *testing.T) {
 		decimals: 123.4,
 	}
 	expected := codeEscape + "32;1mHello {true ok 123 123.4}!" + codeReset
-	returned := color.Paint("green", "Hello %v!", d)
+	returned := color.Paint("green", "Hello %v!", s)
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
 	}
@@ -192,7 +192,6 @@ func TestParse(t *testing.T) {
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
 	}
-	// fmt.Println(returned)
 }
 
 func TestParseArgs(t *testing.T) {
