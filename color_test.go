@@ -7,23 +7,13 @@
 // porchetta, drumstick leberkas t-bone short loin doner filet mignon hamburger corned
 // beef. Venison short loin flank, cupim fatback spare ribs pork loin buffalo turducken
 // tail.package main
-package color_test
+package color
 
 import (
 	"os"
 	"testing"
+
 )
-
-type testData struct {
-	yes      bool
-	text     string
-	number   int
-	decimals float64
-}
-
-// func (d data) String() string {
-// 	return fmt.Sprintf("%s %t", d.text, d.yes)
-// }
 
 func TestPaintName(t *testing.T) {
 	expected := escape + "32;1mHello" + reset
@@ -90,7 +80,12 @@ func TestPaintTextWithArgs2(t *testing.T) {
 }
 
 func TestPaintTextWithStruct(t *testing.T) {
-	d := testData{
+	d := struct {
+		yes      bool
+		text     string
+		number   int
+		decimals float64
+	}{
 		yes:      true,
 		text:     "ok",
 		number:   123,
