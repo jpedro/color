@@ -7,7 +7,7 @@
 // porchetta, drumstick leberkas t-bone short loin doner filet mignon hamburger corned
 // beef. Venison short loin flank, cupim fatback spare ribs pork loin buffalo turducken
 // tail.package main
-package color
+package color_test
 
 import (
 	"os"
