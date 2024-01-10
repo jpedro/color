@@ -1,6 +1,6 @@
 ---
 name: Something else
-about: Describe this issue purpose here.
+about: Describe your issue here.
 title: 'Title: Something happened'
 labels: 'wontfix'
 assignees: 'ptdorf'
