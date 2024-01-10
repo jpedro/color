@@ -3,7 +3,7 @@
 <!--
 [![Travis Status](https://travis-ci.org/jpedro/color.svg?branch=master)](https://travis-ci.org/jpedro/color)
 -->
-[![Status](https://github.com/jpedro/color/workflows/test.yaml/badge.svg)](https://github.com/jpedro/color/actions)
+[![Test](https://github.com/jpedro/color/actions/workflows/test.yaml/badge.svg)](https://github.com/jpedro/color/actions/workflows/test.yaml)
 [![GoDoc](https://godoc.org/github.com/jpedro/color?status.svg)](https://godoc.org/github.com/jpedro/color)
 
 Color is a library for colouring things.
