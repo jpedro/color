@@ -188,7 +188,7 @@ func TestRed(t *testing.T) {
 
 func TestParse(t *testing.T) {
 	expected := "Hello " + codeEscape + "31;1mFAIL" + codeReset + " and " + codeEscape + "32;1mPASS" + codeReset + "!"
-	returned := color.Parse("Hello {red|FAIL} and {green|PASS}!")
+	returned := color.Format("Hello {red|FAIL} and {green|PASS}!")
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
 	}
@@ -196,7 +196,7 @@ func TestParse(t *testing.T) {
 
 func TestParseArgs(t *testing.T) {
 	expected := "Hello " + codeEscape + "31;1mFAIL" + codeReset + " and " + codeEscape + "38;5;27mPASS" + codeReset + "!"
-	returned := color.Parse("Hello {red|%s} and {27|%s}!", "FAIL", "PASS")
+	returned := color.Format("Hello {red|%s} and {27|%s}!", "FAIL", "PASS")
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
 	}
@@ -204,7 +204,7 @@ func TestParseArgs(t *testing.T) {
 
 func TestParseArgsNumber(t *testing.T) {
 	expected := "Hello " + codeEscape + "31;1mFAIL" + codeReset + " and " + codeEscape + "38;5;27mPASS" + codeReset + "!"
-	returned := color.Parse("Hello {red|%s} and {27|%s}!", "FAIL", "PASS")
+	returned := color.Format("Hello {red|%s} and {27|%s}!", "FAIL", "PASS")
 	if expected != returned {
 		t.Error("Expected", expected, "got", returned)
 	}

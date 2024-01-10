@@ -11,6 +11,10 @@ test:
 	go tool cover -func coverage.out
 	go tool cover -html coverage.out -o coverage.html
 
+.PHONY: example
+example:
+	cd ./example && go run .
+
 .PHONY: deploy
 deploy:
 	git release

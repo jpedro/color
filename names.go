@@ -1,7 +1,7 @@
 package color
 
 var (
-	basicNames = map[string]string{
+	namesBasic = map[string]string{
 		"red":     "31;1",
 		"green":   "32;1",
 		"yellow":  "33;1",
@@ -17,7 +17,7 @@ var (
 		"pale":    "38;5;246",
 	}
 
-	termNames = map[string]string{
+	namesTerm = map[string]string{
 		// "Black"              : "#000000",
 		// "Maroon"             : "#800000",
 		// "Green"              : "#008000",
