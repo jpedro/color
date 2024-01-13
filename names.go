@@ -1,6 +1,7 @@
 package color
 
 var (
+	//lint:ignore U1000 Shhhh
 	namesBasic = map[string]string{
 		"red":     "31;1",
 		"green":   "32;1",
@@ -17,7 +18,23 @@ var (
 		"pale":    "38;5;246",
 	}
 
-	namesTerm = map[string]string{
+	namesCommon = map[string]string{
+		"red":     "1;1",
+		"green":   "2;1",
+		"yellow":  "3;1",
+		"blue":    "4;1",
+		"magenta": "5;1",
+		"cyan":    "6;1",
+		"brown":   "8;5;94",
+		"pink":    "8;5;199",
+		"orange":  "8;5;208",
+		"purple":  "8;5;213",
+		"salmon":  "8;5;210",
+		"gray":    "8;5;240",
+		"pale":    "8;5;246",
+	}
+
+	namesHtml = map[string]string{
 		// "Black"              : "#000000",
 		// "Maroon"             : "#800000",
 		// "Green"              : "#008000",
@@ -41,11 +58,11 @@ var (
 		// "Blue2"              : "#0000d7",
 		// "Blue1"              : "#0000ff",
 		// "DarkGreen"          : "#005f00",
-		"DeepSkyBlue1": "#005f5f",
-		"DeepSkyBlue2": "#005f87",
-		"DeepSkyBlue3": "#005faf",
-		"DodgerBlue3":  "#005fd7",
-		"DodgerBlue2":  "#005fff",
+		"deepskyblue1": "#005f5f",
+		"deepskyblue2": "#005f87",
+		"deepskyblue3": "#005faf",
+		"dodgerblue3":  "#005fd7",
+		"dodgerblue2":  "#005fff",
 		// "Green4"             : "#008700",
 		// "SpringGreen4"       : "#00875f",
 		// "Turquoise4"         : "#008787",
@@ -59,9 +76,9 @@ var (
 		// "DeepSkyBlue6"       : "#00afd7",
 		// "DeepSkyBlue7"       : "#00afff",
 		// "Green5"             : "#00d700",
-		"SpringGreen5": "#00d75f",
-		"SpringGreen6": "#00d787",
-		"Cyan3":        "#00d7af",
+		"springgreen5": "#00d75f",
+		"springgreen6": "#00d787",
+		"cyan3":        "#00d7af",
 		// "DarkTurquoise"      : "#00d7d7",
 		// "Turquoise2"         : "#00d7ff",
 		// "Green1"             : "#00ff00",
